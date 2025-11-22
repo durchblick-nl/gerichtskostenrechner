@@ -26,13 +26,13 @@ Grundsätzlich trägt die **unterliegende Partei** die Prozesskosten (Art. 106 Z
 
 Die Gerichtskosten variieren **erheblich** je nach Kanton. Der Rechner berücksichtigt diese Unterschiede mit kantonsspezifischen Gebührenmultiplikatoren.
 
-| Kanton | Kostenniveau | Faktor |
-|--------|--------------|--------|
-| Obwalden, Uri | Günstig | 0.70–0.75 |
-| Luzern, Aargau | Moderat | 0.85–0.88 |
-| Zürich | Durchschnitt | 1.00 |
-| Bern, Genf | Höher | 1.15–1.20 |
-| Jura | Am höchsten | 1.25 |
+| Kanton | Kostenniveau | Faktor | Bemerkung |
+|--------|--------------|--------|-----------|
+| Thurgau | Günstigster | 0.50 | CHF 4'000 bei 100k Streitwert |
+| Luzern, Aargau | Moderat | 0.65–0.96 | |
+| Zürich | Referenz | 1.00 | CHF 8'000 bei 100k Streitwert |
+| Bern, Uri | Teurer | 1.50 | CHF 12'000 bei 100k Streitwert |
+| Graubünden | Teuerster | 2.50 | Bis CHF 30'000 bei 100k Streitwert! |
 
 👉 **[Detaillierte Kostenübersicht pro Kanton](KOSTEN.md)**
 
@@ -76,13 +76,13 @@ En principe, la **partie qui succombe** supporte les frais de procédure (art. 1
 
 Les frais de justice varient **considérablement** selon le canton. Le calculateur tient compte de ces différences avec des multiplicateurs spécifiques à chaque canton.
 
-| Canton | Niveau de coût | Facteur |
-|--------|----------------|---------|
-| Obwald, Uri | Bas | 0.70–0.75 |
-| Lucerne, Argovie | Modéré | 0.85–0.88 |
-| Zurich | Moyen | 1.00 |
-| Berne, Genève | Plus élevé | 1.15–1.20 |
-| Jura | Le plus élevé | 1.25 |
+| Canton | Niveau de coût | Facteur | Remarque |
+|--------|----------------|---------|----------|
+| Thurgovie | Le moins cher | 0.50 | CHF 4'000 pour 100k de valeur litigieuse |
+| Lucerne, Argovie | Modéré | 0.65–0.96 | |
+| Zurich | Référence | 1.00 | CHF 8'000 pour 100k de valeur litigieuse |
+| Berne, Uri | Plus élevé | 1.50 | CHF 12'000 pour 100k de valeur litigieuse |
+| Grisons | Le plus cher | 2.50 | Jusqu'à CHF 30'000 pour 100k! |
 
 👉 **[Aperçu détaillé des frais par canton](KOSTEN.md)**
 

@@ -36,37 +36,40 @@ const CANTONS = {
 };
 
 /**
- * Canton-specific fee multipliers (relative to base/average fees)
- * Based on research comparing cantonal fee structures
- * 1.0 = average, >1.0 = more expensive, <1.0 = less expensive
+ * Canton-specific fee multipliers (relative to Zürich base fees)
+ * Based on official cantonal fee regulations research (November 2025)
+ * 1.0 = Zürich reference, >1.0 = more expensive, <1.0 = less expensive
+ *
+ * Sources: Official cantonal fee regulations (Gebührenverordnungen)
+ * See KOSTEN.md for detailed references
  */
 const CANTON_FEE_MULTIPLIERS = {
-    ZH: 1.0,   // Zürich - reference
-    BE: 1.15,  // Bern - higher fees
-    LU: 0.85,  // Luzern - moderate
-    UR: 0.75,  // Uri - lower
-    SZ: 0.80,  // Schwyz - moderate
-    OW: 0.70,  // Obwalden - lower
-    NW: 0.75,  // Nidwalden - lower
-    GL: 0.80,  // Glarus - moderate
-    ZG: 0.90,  // Zug - moderate
-    FR: 0.95,  // Freiburg - moderate
+    ZH: 1.00,  // Zürich - reference (GebV OG)
+    BE: 1.50,  // Bern - expensive (VBRS: 12k for 100k Streitwert)
+    LU: 0.65,  // Luzern - moderate (2.5-8k for 50-100k)
+    UR: 1.50,  // Uri - expensive! (12k for 100k Streitwert)
+    SZ: 0.90,  // Schwyz - moderate estimate
+    OW: 0.80,  // Obwalden - moderate estimate
+    NW: 0.80,  // Nidwalden - moderate estimate
+    GL: 0.85,  // Glarus - moderate estimate
+    ZG: 1.25,  // Zug - higher (5-15k for 100k)
+    FR: 1.20,  // Fribourg - higher (max 500k for appeals)
     SO: 0.90,  // Solothurn - moderate
-    BS: 1.05,  // Basel-Stadt - higher
+    BS: 1.10,  // Basel-Stadt - higher
     BL: 0.95,  // Basel-Landschaft - moderate
-    SH: 0.85,  // Schaffhausen - moderate
-    AR: 0.80,  // Appenzell AR - lower
-    AI: 0.75,  // Appenzell IR - lower
-    SG: 0.90,  // St. Gallen - moderate
-    GR: 0.85,  // Graubünden - moderate
-    AG: 0.88,  // Aargau - moderate
-    TG: 0.85,  // Thurgau - moderate
-    TI: 0.95,  // Tessin - moderate
-    VD: 1.10,  // Waadt - higher
+    SH: 0.90,  // Schaffhausen - moderate
+    AR: 0.85,  // Appenzell AR - moderate
+    AI: 0.90,  // Appenzell IR - moderate
+    SG: 1.00,  // St. Gallen - same as ZH (8k for 50k)
+    GR: 2.50,  // Graubünden - very expensive! (up to 30k for 100k)
+    AG: 0.96,  // Aargau - moderate (7.7k for 100k)
+    TG: 0.50,  // Thurgau - cheapest! (4k for 100k)
+    TI: 0.90,  // Tessin - moderate
+    VD: 0.80,  // Waadt - relatively cheaper for high amounts
     VS: 0.90,  // Wallis - moderate
     NE: 1.00,  // Neuenburg - average
-    GE: 1.20,  // Genf - highest
-    JU: 1.25   // Jura - highest
+    GE: 1.30,  // Genf - expensive
+    JU: 1.20   // Jura - higher
 };
 
 /**
