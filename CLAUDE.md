@@ -147,10 +147,21 @@ Kein Build-Prozess nötig - direkt HTML/CSS/JS.
    - Gutachterkosten
    - Rechtsmittelverfahren
 
-## Verwandte Projekte
+## Zusammengehörige Projekte
 
-- [verzugszinsrechner](https://github.com/chosee/verzugszinsrechner) - Schweizer Verzugszinsrechner
-- [frist](https://github.com/chosee/frist) - Fristenrechner
+Dieses Projekt ist Teil einer Suite von Schweizer Rechtstools:
+
+| Projekt | Beschreibung | URL |
+|---------|--------------|-----|
+| **gerichtskostenrechner** | Gerichtskosten für Zivilverfahren | [github.com/chosee/gerichtskostenrechner](https://github.com/chosee/gerichtskostenrechner) |
+| **verzugszinsrechner** | Verzugszinsen nach OR 104 | [github.com/chosee/verzugszinsrechner](https://github.com/chosee/verzugszinsrechner) |
+| **frist** | Fristenrechner (ZPO, OR, etc.) | [github.com/chosee/frist](https://github.com/chosee/frist) |
+
+Alle drei Projekte:
+- Bilingual (DE/FR)
+- Vanilla HTML/CSS/JS (kein Framework)
+- Client-side Berechnungen (kein Backend)
+- Open Source
 
 ## Kontakt
 
