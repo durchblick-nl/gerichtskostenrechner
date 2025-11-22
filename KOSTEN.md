@@ -190,6 +190,130 @@ Der Kanton bietet einen [Excel-Rechner](https://www.vs.ch/de/web/tribunaux/calcu
 
 ---
 
+### Uri (UR)
+
+**Rechtsgrundlage:** Gerichtsgebührenreglement (gestützt auf Art. 27 der Verordnung über die Gebühren)
+
+| Verfahren | Gebührenrahmen |
+|-----------|----------------|
+| Schlichtung | ab CHF 200 |
+| Landgerichtspräsidium (Ehe) | CHF 500+ |
+| Landgerichtspräsidium (übrige) | CHF 250+ |
+| Rechtskraftbescheinigung | CHF 20–50 |
+
+**Kostenvorschuss bei CHF 100'000 Streitwert:** ca. CHF 12'000 (teuer!)
+
+---
+
+### Schwyz (SZ)
+
+**Rechtsgrundlage:** Gebührenordnung für die Verwaltung und Rechtspflege
+
+Für genaue Tarife siehe [Kantonsgericht Schwyz](https://www.kgsz.ch)
+
+---
+
+### Obwalden (OW)
+
+**Rechtsgrundlage:** Gebührenordnung für die Rechtspflege
+
+Für genaue Tarife siehe offizielle Gesetzessammlung des Kantons Obwalden (ow.ch)
+
+---
+
+### Nidwalden (NW)
+
+**Rechtsgrundlage:** Prozesskostengesetz (PKoG)
+
+Für genaue Tarife siehe offizielle Gesetzessammlung des Kantons Nidwalden (nw.ch)
+
+---
+
+### Glarus (GL)
+
+**Rechtsgrundlage:** Zivil- und Strafprozesskostenverordnung
+
+Für genaue Tarife siehe offizielle Gesetzessammlung des Kantons Glarus (gl.ch)
+
+---
+
+### Freiburg (FR)
+
+**Rechtsgrundlage:** [Tarif des frais de procédure RSF 150.12](https://bdlf.fr.ch/app/fr/texts_of_law/150.12)
+
+Der Kanton Fribourg hat einen der höchsten Maximalgebühren der Schweiz (bis CHF 500'000 für Berufungsverfahren).
+
+---
+
+### Solothurn (SO)
+
+**Rechtsgrundlage:** [Gebührentarif BGS 615.11](https://bgs.so.ch/app/de/texts_of_law/615.11)
+
+| Parameter | Wert |
+|-----------|------|
+| Mindestgebühr | CHF 200 |
+| Kostendeckungsgrad | ca. 20% |
+
+---
+
+### Basel-Landschaft (BL)
+
+**Rechtsgrundlage:** [Verordnung über die Gebühren der Gerichte SGS 170.31](https://bl.clex.ch/app/de/texts_of_law/170.31)
+
+---
+
+### Schaffhausen (SH)
+
+**Rechtsgrundlage:** Gerichtskostenverordnung
+
+Für genaue Tarife siehe offizielle Gesetzessammlung des Kantons Schaffhausen (sh.ch)
+
+---
+
+### Appenzell Ausserrhoden (AR)
+
+**Rechtsgrundlage:** Verordnung über die Rechtskosten und Entschädigungen (Gebührenordnung)
+
+| Verfahren | Maximum |
+|-----------|---------|
+| Erstinstanzlich | CHF 5'000 |
+| Scheidung (gemeinsam) | ab CHF 1'200 |
+
+---
+
+### Appenzell Innerrhoden (AI)
+
+**Rechtsgrundlage:** Verordnung über die Gebühren der Gerichte (GGV)
+
+| Parameter | Wert |
+|-----------|------|
+| Gebührenobergrenze (Standard) | CHF 80'000 |
+| Maximum bei komplexen Fällen | bis CHF 360'000 |
+| Scheidung (gemeinsam) | ab CHF 1'600 |
+
+---
+
+### Neuchâtel (NE)
+
+**Rechtsgrundlage:** [Loi fixant le tarif des frais RSN 164.1](https://rsn.ne.ch/DATA/program/books/rsne/pdf/1641.pdf)
+
+| Streitwert | Gebühr |
+|------------|--------|
+| 100'001–1'000'000 | CHF 6'500 + 3% des Mehrbetrags |
+| Tribunal des mesures | CHF 200–2'500 |
+
+*In Mietsachen (Wohnraum) werden keine Gerichtsgebühren erhoben.*
+
+---
+
+### Jura (JU)
+
+**Rechtsgrundlage:** [Décret fixant les émoluments judiciaires 176.511](https://rsju.jura.ch/fr/viewdocument.html?idn=20021&id=34172)
+
+Gehört zu den teureren Kantonen der Schweiz.
+
+---
+
 ## Kostenlose Verfahren | Procédures gratuites
 
 Gemäss **Art. 114 ZPO** / Selon **art. 114 CPC**:
