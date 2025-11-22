@@ -1,0 +1,343 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Gerichtskostenrechner Schweiz - Prozesskosten berechnen</title>
+    <link rel="icon" type="image/svg+xml" href="../favicon.svg">
+    <meta name="description" content="Berechnen Sie die voraussichtlichen Gerichtskosten für Ihr Zivilverfahren in der Schweiz. Kostenlos, schnell und orientierend.">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <link rel="stylesheet" href="../css/styles.css">
+</head>
+<body>
+    <div class="container">
+        <div class="header-row">
+            <div class="logo-container">
+                <img src="https://www.durchblick.nl/images/durchblick_logo.svg"
+                     alt="Durchblick Consultancy Logo"
+                     class="logo">
+            </div>
+            <div class="language-switcher">
+                <a href="../de/" class="lang-btn active">DE</a>
+                <a href="../fr/" class="lang-btn">FR</a>
+            </div>
+        </div>
+
+        <h1>Gerichtskostenrechner Schweiz</h1>
+
+        <div class="steps-container">
+            <div class="step-card">
+                <div class="step-icon">
+                    <i class="fas fa-coins"></i>
+                    <div class="step-number">1</div>
+                </div>
+                <div class="step-content">
+                    <h3>Streitwert eingeben</h3>
+                    <p>Der Streitwert ist der Wert des Streitgegenstandes, also der Betrag, um den gestritten wird.</p>
+                </div>
+            </div>
+
+            <div class="step-card">
+                <div class="step-icon">
+                    <i class="fas fa-gavel"></i>
+                    <div class="step-number">2</div>
+                </div>
+                <div class="step-content">
+                    <h3>Verfahrensart wählen</h3>
+                    <p>Je nach Streitwert und Sachgebiet kommt ein anderes Verfahren zur Anwendung.</p>
+                </div>
+            </div>
+
+            <div class="step-card">
+                <div class="step-icon">
+                    <i class="fas fa-calculator"></i>
+                    <div class="step-number">3</div>
+                </div>
+                <div class="step-content">
+                    <h3>Kosten berechnen</h3>
+                    <p>Erhalten Sie eine Schätzung der Gerichtskosten und möglichen Anwaltskosten.</p>
+                </div>
+            </div>
+        </div>
+
+        <div class="calculator-card">
+            <form id="kostenForm">
+                <div class="form-group">
+                    <label for="streitwert" class="required">Streitwert (CHF)
+                        <span class="info-tooltip">
+                            <span class="info-icon">?</span>
+                            <span class="tooltip-content">Der Streitwert entspricht dem Wert der eingeklagten Forderung oder des Streitgegenstandes. Bei mehreren Ansprüchen werden diese zusammengerechnet.</span>
+                        </span>
+                    </label>
+                    <div class="currency-input-wrapper">
+                        <input type="text"
+                               id="streitwert"
+                               name="streitwert"
+                               required
+                               placeholder="z.B. 50'000.00"
+                               title="Streitwert in CHF">
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label for="canton">Kanton
+                        <span class="info-tooltip">
+                            <span class="info-icon">?</span>
+                            <span class="tooltip-content">Die Gerichtskosten variieren je nach Kanton erheblich. Wählen Sie den Kanton, in dem das Verfahren stattfindet.</span>
+                        </span>
+                    </label>
+                    <select id="canton" name="canton">
+                        <option value="ZH">Zürich</option>
+                        <option value="BE">Bern</option>
+                        <option value="LU">Luzern</option>
+                        <option value="UR">Uri</option>
+                        <option value="SZ">Schwyz</option>
+                        <option value="OW">Obwalden</option>
+                        <option value="NW">Nidwalden</option>
+                        <option value="GL">Glarus</option>
+                        <option value="ZG">Zug</option>
+                        <option value="FR">Freiburg</option>
+                        <option value="SO">Solothurn</option>
+                        <option value="BS">Basel-Stadt</option>
+                        <option value="BL">Basel-Landschaft</option>
+                        <option value="SH">Schaffhausen</option>
+                        <option value="AR">Appenzell Ausserrhoden</option>
+                        <option value="AI">Appenzell Innerrhoden</option>
+                        <option value="SG">St. Gallen</option>
+                        <option value="GR">Graubünden</option>
+                        <option value="AG">Aargau</option>
+                        <option value="TG">Thurgau</option>
+                        <option value="TI">Tessin</option>
+                        <option value="VD">Waadt</option>
+                        <option value="VS">Wallis</option>
+                        <option value="NE">Neuenburg</option>
+                        <option value="GE">Genf</option>
+                        <option value="JU">Jura</option>
+                    </select>
+                </div>
+
+                <div class="form-group">
+                    <label for="sachgebiet">Sachgebiet
+                        <span class="info-tooltip">
+                            <span class="info-icon">?</span>
+                            <span class="tooltip-content">Gewisse Sachgebiete sind von den Gerichtskosten befreit, z.B. Arbeitsrecht bis CHF 30'000 oder Mietrecht.</span>
+                        </span>
+                    </label>
+                    <select id="sachgebiet" name="sachgebiet">
+                        <option value="allgemein">Allgemeines Zivilrecht</option>
+                        <option value="arbeitsrecht">Arbeitsrecht</option>
+                        <option value="miete">Mietrecht (Wohn-/Geschäftsräume)</option>
+                        <option value="kaufvertrag">Kaufvertrag</option>
+                        <option value="werkvertrag">Werkvertrag</option>
+                        <option value="schadenersatz">Schadenersatz</option>
+                        <option value="erbrecht">Erbrecht</option>
+                        <option value="gesellschaftsrecht">Gesellschaftsrecht</option>
+                    </select>
+                </div>
+
+                <div class="form-group">
+                    <label for="verfahrensart">Verfahrensart
+                        <span class="info-tooltip">
+                            <span class="info-icon">?</span>
+                            <span class="tooltip-content">Das vereinfachte Verfahren gilt bis CHF 30'000 Streitwert. Darüber kommt das ordentliche Verfahren zur Anwendung. Das summarische Verfahren gilt für Rechtsschutz in klaren Fällen.</span>
+                        </span>
+                    </label>
+                    <select id="verfahrensart" name="verfahrensart" onchange="markVerfahrensartSelected()">
+                        <option value="schlichtung">Schlichtungsverfahren</option>
+                        <option value="vereinfacht" selected>Vereinfachtes Verfahren (bis CHF 30'000)</option>
+                        <option value="ordentlich">Ordentliches Verfahren</option>
+                        <option value="summarisch">Summarisches Verfahren</option>
+                    </select>
+                </div>
+
+                <div class="form-group">
+                    <div class="checkbox-group">
+                        <label class="checkbox-label">
+                            <input type="checkbox" id="includeAnwalt" name="includeAnwalt" checked>
+                            Anwaltskosten einbeziehen (Schätzung)
+                        </label>
+                    </div>
+                    <small class="form-hint">Anwaltskosten variieren stark je nach Anwalt, Aufwand und Komplexität des Falls.</small>
+                </div>
+
+                <div class="warning">
+                    <i class="fas fa-exclamation-triangle"></i>
+                    Dieser Rechner dient nur zur Orientierung. Die tatsächlichen Kosten hängen vom Kanton, dem Aufwand und weiteren Faktoren ab.
+                </div>
+
+                <button type="submit">Kosten berechnen</button>
+            </form>
+
+            <div id="result" class="result" style="display: none;"></div>
+        </div>
+
+        <div class="info-cards-container">
+            <div class="info-step-card highlight">
+                <div class="step-icon">
+                    <i class="fas fa-coins"></i>
+                </div>
+                <div class="step-content">
+                    <h3>Was sind Prozesskosten?</h3>
+                    <p>Prozesskosten setzen sich zusammen aus:</p>
+                    <ul>
+                        <li><strong>Gerichtskosten:</strong> Gebühren des Gerichts für das Verfahren</li>
+                        <li><strong>Anwaltskosten:</strong> Honorar des eigenen Anwalts</li>
+                        <li><strong>Parteientschädigung:</strong> Bei Verlust: Kosten des Gegenanwalts</li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="info-step-card">
+                <div class="step-icon">
+                    <i class="fas fa-balance-scale"></i>
+                </div>
+                <div class="step-content">
+                    <h3>Wer trägt die Kosten?</h3>
+                    <p>Grundsätzlich trägt die <strong>unterliegende Partei</strong> die Prozesskosten (Art. 106 ZPO). Bei teilweisem Obsiegen werden die Kosten verhältnismässig verteilt.</p>
+                    <p>Die klagende Partei muss in der Regel einen <strong>Kostenvorschuss</strong> leisten.</p>
+                </div>
+            </div>
+
+            <div class="info-step-card">
+                <div class="step-icon">
+                    <i class="fas fa-hand-holding-usd"></i>
+                </div>
+                <div class="step-content">
+                    <h3>Kostenlose Verfahren</h3>
+                    <p>Folgende Verfahren sind <strong>gerichtskostenfrei</strong> (Art. 114 ZPO):</p>
+                    <ul>
+                        <li>Arbeitsrecht bis CHF 30'000 Streitwert</li>
+                        <li>Mietrecht (Wohn- und Geschäftsräume)</li>
+                        <li>Gleichstellungsgesetz</li>
+                        <li>Mitwirkungsgesetz</li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="info-step-card">
+                <div class="step-icon">
+                    <i class="fas fa-map-marker-alt"></i>
+                </div>
+                <div class="step-content">
+                    <h3>Kantonale Unterschiede</h3>
+                    <p>Die Gerichtskosten <strong>variieren erheblich</strong> je nach Kanton. Bei einem Streitwert von CHF 100'000 können die Gebühren zwischen CHF 7'000 und CHF 12'000 betragen.</p>
+                    <p>Dieser Rechner verwendet Durchschnittswerte.</p>
+                </div>
+            </div>
+        </div>
+
+        <div class="law-section">
+            <h2>Gesetzliche Grundlagen</h2>
+            <p class="law-subtitle">Schweizerische Zivilprozessordnung (ZPO)</p>
+
+            <div class="law-card">
+                <div class="law-header">
+                    <h3><a href="https://www.fedlex.admin.ch/eli/cc/2010/262/de#art_95" target="_blank" rel="noopener">Art. 95 ZPO – Begriffe <i class="fas fa-external-link-alt"></i></a></h3>
+                </div>
+                <div class="law-content">
+                    <ol>
+                        <li>Prozesskosten sind:
+                            <ol type="a">
+                                <li>die Gerichtskosten;</li>
+                                <li>die Parteientschädigung.</li>
+                            </ol>
+                        </li>
+                        <li>Gerichtskosten sind:
+                            <ol type="a">
+                                <li>die Pauschalen für das Schlichtungsverfahren;</li>
+                                <li>die Pauschalen für den Entscheid (Entscheidgebühr);</li>
+                                <li>die Kosten der Beweisführung;</li>
+                                <li>die Kosten für die Übersetzung;</li>
+                                <li>die Kosten für die Vertretung des Kindes (Art. 299 und 300).</li>
+                            </ol>
+                        </li>
+                    </ol>
+                </div>
+            </div>
+
+            <div class="law-card">
+                <div class="law-header">
+                    <h3><a href="https://www.fedlex.admin.ch/eli/cc/2010/262/de#art_106" target="_blank" rel="noopener">Art. 106 ZPO – Verteilung nach Ausgang <i class="fas fa-external-link-alt"></i></a></h3>
+                </div>
+                <div class="law-content">
+                    <ol>
+                        <li>Die Prozesskosten werden der unterliegenden Partei auferlegt.</li>
+                        <li>Hat keine Partei vollständig obsiegt, so werden die Prozesskosten nach dem Ausgang des Verfahrens verteilt.</li>
+                        <li>Sind am Prozess mehrere Personen als Haupt- oder Nebenparteien beteiligt, so bestimmt das Gericht ihren Anteil an den Prozesskosten.</li>
+                    </ol>
+                </div>
+            </div>
+
+            <div class="law-card">
+                <div class="law-header">
+                    <h3><a href="https://www.fedlex.admin.ch/eli/cc/2010/262/de#art_114" target="_blank" rel="noopener">Art. 114 ZPO – Kostenlose Verfahren <i class="fas fa-external-link-alt"></i></a></h3>
+                </div>
+                <div class="law-content">
+                    <p>Im Schlichtungsverfahren werden keine Gerichtskosten gesprochen bei Streitigkeiten:</p>
+                    <ol type="a">
+                        <li>nach dem Gleichstellungsgesetz;</li>
+                        <li>nach dem Behindertengleichstellungsgesetz;</li>
+                        <li>aus Miete und Pacht von Wohn- und Geschäftsräumen;</li>
+                        <li>aus dem Arbeitsverhältnis sowie nach dem Arbeitsvermittlungsgesetz bis zu einem Streitwert von 30'000 Franken;</li>
+                        <li>nach dem Mitwirkungsgesetz;</li>
+                        <li>aus Zusatzversicherungen zur sozialen Krankenversicherung;</li>
+                        <li>nach dem Datenschutzgesetz.</li>
+                    </ol>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <footer class="site-footer">
+        <div class="footer-content">
+            <p>
+                <a href="https://durchblick.nl" target="_blank" rel="noopener">Durchblick Consultancy BV</a>
+                &nbsp;•&nbsp;
+                <a href="https://github.com/chosee/gerichtskostenrechner" target="_blank" rel="noopener">
+                    <i class="fab fa-github"></i> Quellcode auf GitHub
+                </a>
+            </p>
+            <p class="footer-disclaimer">Dieser Rechner dient nur zur Orientierung. Keine Rechtsberatung.</p>
+        </div>
+    </footer>
+
+    <div class="print-header" style="display: none;">
+        <img src="https://www.durchblick.nl/images/durchblick_logo.svg"
+             alt="Durchblick Consultancy Logo">
+        <div>
+            <h2>Gerichtskostenrechnung</h2>
+            <p id="printDate" style="font-size: 0.9rem; color: #666; margin-top: 0.25rem;"></p>
+        </div>
+    </div>
+
+    <div class="print-footer" style="display: none;">
+        <p><strong>gerichtskostenrechner.ch</strong> – Schweizer Gerichtskostenrechner</p>
+        <p>Dieser Ausdruck dient nur zur Orientierung. Keine Rechtsberatung.</p>
+    </div>
+
+    <div id="disclaimerModal" class="modal">
+        <div class="modal-content">
+            <h2>Rechtlicher Hinweis</h2>
+            <div class="disclaimer-text">
+                <p><strong>Haftungsausschluss und Nutzungsbedingungen</strong></p>
+                <p>Durchblick Consultancy BV stellt diesen Rechner als orientierendes Hilfsmittel zur Verfügung. Trotz sorgfältiger Entwicklung kann keine Gewähr für die Richtigkeit der Berechnungen übernommen werden.</p>
+
+                <p>Insbesondere wird darauf hingewiesen, dass:</p>
+                <ul>
+                    <li>Dieser Rechner nur zur Orientierung dient und keine Rechtsberatung ersetzt.</li>
+                    <li>Die tatsächlichen Kosten je nach Kanton, Komplexität und Aufwand erheblich abweichen können.</li>
+                    <li>Durchblick Consultancy BV jegliche Haftung für Schäden aus der Nutzung ablehnt.</li>
+                </ul>
+
+                <p>Mit der Nutzung dieses Rechners akzeptieren Sie diese Bedingungen.</p>
+            </div>
+            <button onclick="acceptDisclaimer()" class="accept-button">
+                Ich habe den Hinweis gelesen und akzeptiere die Bedingungen
+            </button>
+        </div>
+    </div>
+
+    <script src="../scripts/calculations.js"></script>
+    <script src="../scripts/app.js"></script>
+</body>
+</html>

@@ -1,0 +1,343 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Calculateur de frais de justice suisse - Frais de procédure</title>
+    <link rel="icon" type="image/svg+xml" href="../favicon.svg">
+    <meta name="description" content="Calculez les frais de justice prévisibles pour votre procédure civile en Suisse. Gratuit, rapide et à titre indicatif.">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <link rel="stylesheet" href="../css/styles.css">
+</head>
+<body>
+    <div class="container">
+        <div class="header-row">
+            <div class="logo-container">
+                <img src="https://www.durchblick.nl/images/durchblick_logo.svg"
+                     alt="Durchblick Consultancy Logo"
+                     class="logo">
+            </div>
+            <div class="language-switcher">
+                <a href="../de/" class="lang-btn">DE</a>
+                <a href="../fr/" class="lang-btn active">FR</a>
+            </div>
+        </div>
+
+        <h1>Calculateur de frais de justice suisse</h1>
+
+        <div class="steps-container">
+            <div class="step-card">
+                <div class="step-icon">
+                    <i class="fas fa-coins"></i>
+                    <div class="step-number">1</div>
+                </div>
+                <div class="step-content">
+                    <h3>Saisir la valeur litigieuse</h3>
+                    <p>La valeur litigieuse est la valeur de l'objet du litige, c'est-à-dire le montant contesté.</p>
+                </div>
+            </div>
+
+            <div class="step-card">
+                <div class="step-icon">
+                    <i class="fas fa-gavel"></i>
+                    <div class="step-number">2</div>
+                </div>
+                <div class="step-content">
+                    <h3>Choisir le type de procédure</h3>
+                    <p>Selon la valeur litigieuse et le domaine, une procédure différente s'applique.</p>
+                </div>
+            </div>
+
+            <div class="step-card">
+                <div class="step-icon">
+                    <i class="fas fa-calculator"></i>
+                    <div class="step-number">3</div>
+                </div>
+                <div class="step-content">
+                    <h3>Calculer les frais</h3>
+                    <p>Obtenez une estimation des frais de justice et des éventuels frais d'avocat.</p>
+                </div>
+            </div>
+        </div>
+
+        <div class="calculator-card">
+            <form id="kostenForm">
+                <div class="form-group">
+                    <label for="streitwert" class="required">Valeur litigieuse (CHF)
+                        <span class="info-tooltip">
+                            <span class="info-icon">?</span>
+                            <span class="tooltip-content">La valeur litigieuse correspond à la valeur de la prétention ou de l'objet du litige. En cas de prétentions multiples, elles sont additionnées.</span>
+                        </span>
+                    </label>
+                    <div class="currency-input-wrapper">
+                        <input type="text"
+                               id="streitwert"
+                               name="streitwert"
+                               required
+                               placeholder="p.ex. 50'000.00"
+                               title="Valeur litigieuse en CHF">
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label for="canton">Canton
+                        <span class="info-tooltip">
+                            <span class="info-icon">?</span>
+                            <span class="tooltip-content">Les frais de justice varient considérablement selon le canton. Choisissez le canton où la procédure aura lieu.</span>
+                        </span>
+                    </label>
+                    <select id="canton" name="canton">
+                        <option value="ZH">Zurich</option>
+                        <option value="BE">Berne</option>
+                        <option value="LU">Lucerne</option>
+                        <option value="UR">Uri</option>
+                        <option value="SZ">Schwytz</option>
+                        <option value="OW">Obwald</option>
+                        <option value="NW">Nidwald</option>
+                        <option value="GL">Glaris</option>
+                        <option value="ZG">Zoug</option>
+                        <option value="FR">Fribourg</option>
+                        <option value="SO">Soleure</option>
+                        <option value="BS">Bâle-Ville</option>
+                        <option value="BL">Bâle-Campagne</option>
+                        <option value="SH">Schaffhouse</option>
+                        <option value="AR">Appenzell Rhodes-Extérieures</option>
+                        <option value="AI">Appenzell Rhodes-Intérieures</option>
+                        <option value="SG">Saint-Gall</option>
+                        <option value="GR">Grisons</option>
+                        <option value="AG">Argovie</option>
+                        <option value="TG">Thurgovie</option>
+                        <option value="TI">Tessin</option>
+                        <option value="VD">Vaud</option>
+                        <option value="VS">Valais</option>
+                        <option value="NE">Neuchâtel</option>
+                        <option value="GE">Genève</option>
+                        <option value="JU">Jura</option>
+                    </select>
+                </div>
+
+                <div class="form-group">
+                    <label for="sachgebiet">Domaine
+                        <span class="info-tooltip">
+                            <span class="info-icon">?</span>
+                            <span class="tooltip-content">Certains domaines sont exempts de frais de justice, p.ex. droit du travail jusqu'à CHF 30'000 ou droit du bail.</span>
+                        </span>
+                    </label>
+                    <select id="sachgebiet" name="sachgebiet">
+                        <option value="allgemein">Droit civil général</option>
+                        <option value="arbeitsrecht">Droit du travail</option>
+                        <option value="miete">Droit du bail (habitations/locaux commerciaux)</option>
+                        <option value="kaufvertrag">Contrat de vente</option>
+                        <option value="werkvertrag">Contrat d'entreprise</option>
+                        <option value="schadenersatz">Dommages-intérêts</option>
+                        <option value="erbrecht">Droit des successions</option>
+                        <option value="gesellschaftsrecht">Droit des sociétés</option>
+                    </select>
+                </div>
+
+                <div class="form-group">
+                    <label for="verfahrensart">Type de procédure
+                        <span class="info-tooltip">
+                            <span class="info-icon">?</span>
+                            <span class="tooltip-content">La procédure simplifiée s'applique jusqu'à CHF 30'000. Au-delà, c'est la procédure ordinaire. La procédure sommaire s'applique en cas de protection juridique dans les cas clairs.</span>
+                        </span>
+                    </label>
+                    <select id="verfahrensart" name="verfahrensart" onchange="markVerfahrensartSelected()">
+                        <option value="schlichtung">Procédure de conciliation</option>
+                        <option value="vereinfacht" selected>Procédure simplifiée (jusqu'à CHF 30'000)</option>
+                        <option value="ordentlich">Procédure ordinaire</option>
+                        <option value="summarisch">Procédure sommaire</option>
+                    </select>
+                </div>
+
+                <div class="form-group">
+                    <div class="checkbox-group">
+                        <label class="checkbox-label">
+                            <input type="checkbox" id="includeAnwalt" name="includeAnwalt" checked>
+                            Inclure les frais d'avocat (estimation)
+                        </label>
+                    </div>
+                    <small class="form-hint">Les frais d'avocat varient considérablement selon l'avocat, la charge de travail et la complexité de l'affaire.</small>
+                </div>
+
+                <div class="warning">
+                    <i class="fas fa-exclamation-triangle"></i>
+                    Ce calculateur sert uniquement d'orientation. Les frais effectifs dépendent du canton, de la charge de travail et d'autres facteurs.
+                </div>
+
+                <button type="submit">Calculer les frais</button>
+            </form>
+
+            <div id="result" class="result" style="display: none;"></div>
+        </div>
+
+        <div class="info-cards-container">
+            <div class="info-step-card highlight">
+                <div class="step-icon">
+                    <i class="fas fa-coins"></i>
+                </div>
+                <div class="step-content">
+                    <h3>Que sont les frais de procédure?</h3>
+                    <p>Les frais de procédure se composent de:</p>
+                    <ul>
+                        <li><strong>Frais de justice:</strong> Émoluments du tribunal pour la procédure</li>
+                        <li><strong>Frais d'avocat:</strong> Honoraires de son propre avocat</li>
+                        <li><strong>Dépens:</strong> En cas de perte: frais de l'avocat adverse</li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="info-step-card">
+                <div class="step-icon">
+                    <i class="fas fa-balance-scale"></i>
+                </div>
+                <div class="step-content">
+                    <h3>Qui supporte les frais?</h3>
+                    <p>En principe, la <strong>partie qui succombe</strong> supporte les frais de procédure (art. 106 CPC). En cas de gain partiel, les frais sont répartis proportionnellement.</p>
+                    <p>La partie demanderesse doit généralement verser une <strong>avance de frais</strong>.</p>
+                </div>
+            </div>
+
+            <div class="info-step-card">
+                <div class="step-icon">
+                    <i class="fas fa-hand-holding-usd"></i>
+                </div>
+                <div class="step-content">
+                    <h3>Procédures gratuites</h3>
+                    <p>Les procédures suivantes sont <strong>gratuites</strong> (art. 114 CPC):</p>
+                    <ul>
+                        <li>Droit du travail jusqu'à CHF 30'000</li>
+                        <li>Droit du bail (habitations et locaux commerciaux)</li>
+                        <li>Loi sur l'égalité</li>
+                        <li>Loi sur la participation</li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="info-step-card">
+                <div class="step-icon">
+                    <i class="fas fa-map-marker-alt"></i>
+                </div>
+                <div class="step-content">
+                    <h3>Différences cantonales</h3>
+                    <p>Les frais de justice <strong>varient considérablement</strong> selon le canton. Pour une valeur litigieuse de CHF 100'000, les émoluments peuvent aller de CHF 7'000 à CHF 12'000.</p>
+                    <p>Ce calculateur utilise des valeurs moyennes.</p>
+                </div>
+            </div>
+        </div>
+
+        <div class="law-section">
+            <h2>Bases légales</h2>
+            <p class="law-subtitle">Code de procédure civile suisse (CPC)</p>
+
+            <div class="law-card">
+                <div class="law-header">
+                    <h3><a href="https://www.fedlex.admin.ch/eli/cc/2010/262/fr#art_95" target="_blank" rel="noopener">Art. 95 CPC – Définitions <i class="fas fa-external-link-alt"></i></a></h3>
+                </div>
+                <div class="law-content">
+                    <ol>
+                        <li>Les frais comprennent:
+                            <ol type="a">
+                                <li>les frais judiciaires;</li>
+                                <li>les dépens.</li>
+                            </ol>
+                        </li>
+                        <li>Les frais judiciaires comprennent:
+                            <ol type="a">
+                                <li>l'émolument forfaitaire de conciliation;</li>
+                                <li>l'émolument forfaitaire de décision;</li>
+                                <li>les frais d'administration des preuves;</li>
+                                <li>les frais de traduction;</li>
+                                <li>les frais de représentation de l'enfant (art. 299 et 300).</li>
+                            </ol>
+                        </li>
+                    </ol>
+                </div>
+            </div>
+
+            <div class="law-card">
+                <div class="law-header">
+                    <h3><a href="https://www.fedlex.admin.ch/eli/cc/2010/262/fr#art_106" target="_blank" rel="noopener">Art. 106 CPC – Répartition en fonction du sort de la cause <i class="fas fa-external-link-alt"></i></a></h3>
+                </div>
+                <div class="law-content">
+                    <ol>
+                        <li>Les frais sont mis à la charge de la partie qui succombe.</li>
+                        <li>Lorsqu'aucune des parties n'obtient entièrement gain de cause, les frais sont répartis selon le sort de la cause.</li>
+                        <li>Lorsque plusieurs personnes participent au procès en tant que parties principales ou accessoires, le tribunal détermine la part de chacune aux frais du procès.</li>
+                    </ol>
+                </div>
+            </div>
+
+            <div class="law-card">
+                <div class="law-header">
+                    <h3><a href="https://www.fedlex.admin.ch/eli/cc/2010/262/fr#art_114" target="_blank" rel="noopener">Art. 114 CPC – Procédure gratuite <i class="fas fa-external-link-alt"></i></a></h3>
+                </div>
+                <div class="law-content">
+                    <p>En procédure de conciliation, il n'est pas perçu de frais judiciaires dans les litiges:</p>
+                    <ol type="a">
+                        <li>relevant de la loi sur l'égalité;</li>
+                        <li>relevant de la loi sur l'égalité pour les handicapés;</li>
+                        <li>portant sur un bail à loyer ou à ferme d'habitations ou de locaux commerciaux;</li>
+                        <li>portant sur un contrat de travail ou relevant de la loi sur le service de l'emploi lorsque la valeur litigieuse n'excède pas 30 000 francs;</li>
+                        <li>relevant de la loi sur la participation;</li>
+                        <li>portant sur des assurances complémentaires à l'assurance-maladie sociale;</li>
+                        <li>relevant de la loi sur la protection des données.</li>
+                    </ol>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <footer class="site-footer">
+        <div class="footer-content">
+            <p>
+                <a href="https://durchblick.nl" target="_blank" rel="noopener">Durchblick Consultancy BV</a>
+                &nbsp;•&nbsp;
+                <a href="https://github.com/chosee/gerichtskostenrechner" target="_blank" rel="noopener">
+                    <i class="fab fa-github"></i> Code source sur GitHub
+                </a>
+            </p>
+            <p class="footer-disclaimer">Ce calculateur sert uniquement d'orientation. Pas de conseil juridique.</p>
+        </div>
+    </footer>
+
+    <div class="print-header" style="display: none;">
+        <img src="https://www.durchblick.nl/images/durchblick_logo.svg"
+             alt="Durchblick Consultancy Logo">
+        <div>
+            <h2>Calcul des frais de justice</h2>
+            <p id="printDate" style="font-size: 0.9rem; color: #666; margin-top: 0.25rem;"></p>
+        </div>
+    </div>
+
+    <div class="print-footer" style="display: none;">
+        <p><strong>gerichtskostenrechner.ch</strong> – Calculateur de frais de justice suisse</p>
+        <p>Ce document sert uniquement d'orientation. Pas de conseil juridique.</p>
+    </div>
+
+    <div id="disclaimerModal" class="modal">
+        <div class="modal-content">
+            <h2>Avis juridique</h2>
+            <div class="disclaimer-text">
+                <p><strong>Exclusion de responsabilité et conditions d'utilisation</strong></p>
+                <p>Durchblick Consultancy BV met ce calculateur à disposition en tant qu'outil indicatif. Malgré un développement soigneux, aucune garantie ne peut être donnée quant à l'exactitude des calculs.</p>
+
+                <p>Il est notamment rappelé que:</p>
+                <ul>
+                    <li>Ce calculateur sert uniquement d'orientation et ne remplace pas un conseil juridique.</li>
+                    <li>Les frais effectifs peuvent varier considérablement selon le canton, la complexité et la charge de travail.</li>
+                    <li>Durchblick Consultancy BV décline toute responsabilité pour les dommages résultant de l'utilisation.</li>
+                </ul>
+
+                <p>En utilisant ce calculateur, vous acceptez ces conditions.</p>
+            </div>
+            <button onclick="acceptDisclaimer()" class="accept-button">
+                J'ai lu l'avis et j'accepte les conditions
+            </button>
+        </div>
+    </div>
+
+    <script src="../scripts/calculations.js"></script>
+    <script src="../scripts/app.js"></script>
+</body>
+</html>

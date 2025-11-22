@@ -1,0 +1,159 @@
+# Schweizer Gerichtskostenrechner | Calculateur de frais de justice suisse
+
+🇩🇪 [Deutsch](#deutsch) | 🇫🇷 [Français](#français)
+
+---
+
+<a name="deutsch"></a>
+## 🇩🇪 Deutsch
+
+Berechne die voraussichtlichen Gerichtskosten für Zivilverfahren in der Schweiz.
+
+**[gerichtskostenrechner.ch](https://gerichtskostenrechner.ch)**
+
+### Was sind Prozesskosten?
+
+Prozesskosten setzen sich zusammen aus:
+- **Gerichtskosten**: Gebühren des Gerichts für das Verfahren
+- **Anwaltskosten**: Honorar des eigenen Anwalts
+- **Parteientschädigung**: Bei Verlust: Kosten des Gegenanwalts
+
+### Wer trägt die Kosten?
+
+Grundsätzlich trägt die **unterliegende Partei** die Prozesskosten (Art. 106 ZPO). Bei teilweisem Obsiegen werden die Kosten verhältnismässig verteilt.
+
+### Kantonale Unterschiede
+
+Die Gerichtskosten variieren **erheblich** je nach Kanton. Der Rechner berücksichtigt diese Unterschiede mit kantonsspezifischen Gebührenmultiplikatoren.
+
+| Kanton | Kostenniveau |
+|--------|--------------|
+| Obwalden, Uri | Günstig |
+| Luzern, Aargau | Moderat |
+| Zürich | Durchschnitt |
+| Bern, Genf | Höher |
+| Jura | Am höchsten |
+
+### Kostenlose Verfahren (Art. 114 ZPO)
+
+- Arbeitsrecht bis CHF 30'000 Streitwert
+- Mietrecht (Wohn- und Geschäftsräume)
+- Gleichstellungsgesetz
+- Mitwirkungsgesetz
+
+### Verfahrensarten
+
+| Verfahren | Streitwert | Typische Kosten |
+|-----------|------------|-----------------|
+| Schlichtung | Alle | CHF 100–1'000 |
+| Vereinfacht | Bis CHF 30'000 | CHF 500–2'500 |
+| Ordentlich | Über CHF 30'000 | CHF 2'500–280'000+ |
+| Summarisch | Schnellverfahren | CHF 300–8'000 |
+
+---
+
+<a name="français"></a>
+## 🇫🇷 Français
+
+Calculez les frais de justice prévisibles pour les procédures civiles en Suisse.
+
+**[gerichtskostenrechner.ch](https://gerichtskostenrechner.ch)**
+
+### Que sont les frais de procédure?
+
+Les frais de procédure se composent de:
+- **Frais de justice**: Émoluments du tribunal pour la procédure
+- **Frais d'avocat**: Honoraires de son propre avocat
+- **Dépens**: En cas de perte: frais de l'avocat adverse
+
+### Qui supporte les frais?
+
+En principe, la **partie qui succombe** supporte les frais de procédure (art. 106 CPC). En cas de gain partiel, les frais sont répartis proportionnellement.
+
+### Différences cantonales
+
+Les frais de justice varient **considérablement** selon le canton. Le calculateur tient compte de ces différences avec des multiplicateurs spécifiques à chaque canton.
+
+| Canton | Niveau de coût |
+|--------|----------------|
+| Obwald, Uri | Bas |
+| Lucerne, Argovie | Modéré |
+| Zurich | Moyen |
+| Berne, Genève | Plus élevé |
+| Jura | Le plus élevé |
+
+### Procédures gratuites (art. 114 CPC)
+
+- Droit du travail jusqu'à CHF 30'000
+- Droit du bail (habitations et locaux commerciaux)
+- Loi sur l'égalité
+- Loi sur la participation
+
+### Types de procédure
+
+| Procédure | Valeur litigieuse | Frais typiques |
+|-----------|-------------------|----------------|
+| Conciliation | Toutes | CHF 100–1'000 |
+| Simplifiée | Jusqu'à CHF 30'000 | CHF 500–2'500 |
+| Ordinaire | Plus de CHF 30'000 | CHF 2'500–280'000+ |
+| Sommaire | Procédure rapide | CHF 300–8'000 |
+
+---
+
+## Technologie | Technologie
+
+```
+gerichtskostenrechner/
+├── index.html           # Spracherkennung / Détection de langue
+├── de/index.html        # Deutsche Version
+├── fr/index.html        # Version française
+├── css/styles.css       # Gemeinsame Styles / Styles partagés
+├── scripts/
+│   ├── calculations.js  # Berechnungslogik / Logique de calcul
+│   └── app.js           # UI-Logik / Logique UI
+└── test.js              # Tests (node test.js)
+```
+
+- Vanilla HTML/CSS/JavaScript (kein Framework)
+- Bilingue DE/FR avec détection automatique
+- 26 Kantone mit spezifischen Gebühren / 26 cantons avec frais spécifiques
+- Aucun backend – calculs côté client
+- Open Source
+
+## Tests
+
+```bash
+node test.js  # 33/33 Tests bestanden / tests réussis
+```
+
+## Gesetzliche Grundlagen | Base légale
+
+- **ZPO Art. 95**: Prozesskosten / Frais
+- **ZPO Art. 106**: Kostenverteilung / Répartition des frais
+- **ZPO Art. 114**: Kostenlose Verfahren / Procédures gratuites
+
+Fedlex-Links:
+- [Art. 95 ZPO (DE)](https://www.fedlex.admin.ch/eli/cc/2010/262/de#art_95)
+- [Art. 95 CPC (FR)](https://www.fedlex.admin.ch/eli/cc/2010/262/fr#art_95)
+
+## Datenquellen | Sources de données
+
+Die kantonalen Gebührenunterschiede basieren auf:
+- [NZZ: Kostspielige Justiz in der Schweiz](https://www.nzz.ch/schweiz/kostspielige-justiz-in-der-schweiz-wer-soll-das-bezahlen-ld.1681569)
+- [Justis: Gerichtskosten in der Schweiz](https://www.justis.ch/de/rechtstipps/artikel/versicherungen/wie-viel-kostet-ein-gerichtsverfahren-in-der-schweiz)
+- [Gerichte Zürich: Prozesskosten](https://www.gerichte-zh.ch/themen/zivilprozess/prozesskosten.html)
+- [Gerichte Luzern: Gerichtskosten](https://gerichte.lu.ch/rechtsgebiete/prozesskosten/zivilprozess/gerichtskosten)
+
+## Haftungsausschluss | Avertissement
+
+Dieser Rechner dient nur zur Orientierung. Für verbindliche Berechnungen konsultieren Sie einen Rechtsanwalt.
+
+Ce calculateur sert uniquement d'orientation. Pour des calculs contraignants, consultez un avocat.
+
+## Lizenz | Licence
+
+MIT
+
+---
+
+[Durchblick Consultancy BV](https://durchblick.nl) • [Source Code](https://github.com/chosee/gerichtskostenrechner)
