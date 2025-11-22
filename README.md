@@ -26,13 +26,15 @@ Grundsätzlich trägt die **unterliegende Partei** die Prozesskosten (Art. 106 Z
 
 Die Gerichtskosten variieren **erheblich** je nach Kanton. Der Rechner berücksichtigt diese Unterschiede mit kantonsspezifischen Gebührenmultiplikatoren.
 
-| Kanton | Kostenniveau |
-|--------|--------------|
-| Obwalden, Uri | Günstig |
-| Luzern, Aargau | Moderat |
-| Zürich | Durchschnitt |
-| Bern, Genf | Höher |
-| Jura | Am höchsten |
+| Kanton | Kostenniveau | Faktor |
+|--------|--------------|--------|
+| Obwalden, Uri | Günstig | 0.70–0.75 |
+| Luzern, Aargau | Moderat | 0.85–0.88 |
+| Zürich | Durchschnitt | 1.00 |
+| Bern, Genf | Höher | 1.15–1.20 |
+| Jura | Am höchsten | 1.25 |
+
+👉 **[Detaillierte Kostenübersicht pro Kanton](KOSTEN.md)**
 
 ### Kostenlose Verfahren (Art. 114 ZPO)
 
@@ -74,13 +76,15 @@ En principe, la **partie qui succombe** supporte les frais de procédure (art. 1
 
 Les frais de justice varient **considérablement** selon le canton. Le calculateur tient compte de ces différences avec des multiplicateurs spécifiques à chaque canton.
 
-| Canton | Niveau de coût |
-|--------|----------------|
-| Obwald, Uri | Bas |
-| Lucerne, Argovie | Modéré |
-| Zurich | Moyen |
-| Berne, Genève | Plus élevé |
-| Jura | Le plus élevé |
+| Canton | Niveau de coût | Facteur |
+|--------|----------------|---------|
+| Obwald, Uri | Bas | 0.70–0.75 |
+| Lucerne, Argovie | Modéré | 0.85–0.88 |
+| Zurich | Moyen | 1.00 |
+| Berne, Genève | Plus élevé | 1.15–1.20 |
+| Jura | Le plus élevé | 1.25 |
+
+👉 **[Aperçu détaillé des frais par canton](KOSTEN.md)**
 
 ### Procédures gratuites (art. 114 CPC)
 
@@ -111,7 +115,9 @@ gerichtskostenrechner/
 ├── scripts/
 │   ├── calculations.js  # Berechnungslogik / Logique de calcul
 │   └── app.js           # UI-Logik / Logique UI
-└── test.js              # Tests (node test.js)
+├── test.js              # Tests (node test.js)
+├── KOSTEN.md            # Kostenübersicht / Aperçu des frais
+└── README.md            # Dokumentation
 ```
 
 - Vanilla HTML/CSS/JavaScript (kein Framework)
@@ -136,6 +142,11 @@ Fedlex-Links:
 - [Art. 95 ZPO (DE)](https://www.fedlex.admin.ch/eli/cc/2010/262/de#art_95)
 - [Art. 95 CPC (FR)](https://www.fedlex.admin.ch/eli/cc/2010/262/fr#art_95)
 
+## Weiterführende Informationen | Informations complémentaires
+
+- [Wie viel kostet ein Gerichtsverfahren in der Schweiz?](https://www.justis.ch/de/rechtstipps/artikel/versicherungen/wie-viel-kostet-ein-gerichtsverfahren-in-der-schweiz) (DE)
+- [Combien coûte une procédure judiciaire en Suisse?](https://www.justis.ch/fr/renseignements_juridiques/artikel/assurances/combien-coute-une-proccdure-judiciaire-en-suisse) (FR)
+
 ## Datenquellen | Sources de données
 
 Die kantonalen Gebührenunterschiede basieren auf:
@@ -143,6 +154,7 @@ Die kantonalen Gebührenunterschiede basieren auf:
 - [Justis: Gerichtskosten in der Schweiz](https://www.justis.ch/de/rechtstipps/artikel/versicherungen/wie-viel-kostet-ein-gerichtsverfahren-in-der-schweiz)
 - [Gerichte Zürich: Prozesskosten](https://www.gerichte-zh.ch/themen/zivilprozess/prozesskosten.html)
 - [Gerichte Luzern: Gerichtskosten](https://gerichte.lu.ch/rechtsgebiete/prozesskosten/zivilprozess/gerichtskosten)
+- [Kanton Bern: Verfahrenskosten](https://www.zsg.justice.be.ch/de/start/themen/zivilrecht/kosten/verfahrenskosten.html)
 
 ## Haftungsausschluss | Avertissement
 
