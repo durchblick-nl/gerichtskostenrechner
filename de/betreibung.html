@@ -1,0 +1,591 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Betreibungsrechner Schweiz - Betreibungskosten berechnen</title>
+    <link rel="icon" type="image/svg+xml" href="../favicon.svg">
+    <meta name="description" content="Berechnen Sie die Betreibungskosten nach GebV SchKG. Gebühren für Zahlungsbefehl, Pfändung, Verwertung und Konkurs.">
+    <meta name="keywords" content="Betreibungsrechner, Betreibungskosten, SchKG, GebV, Zahlungsbefehl, Pfändung, Verwertung, Konkurs, Schweiz">
+    <meta name="author" content="Durchblick Consultancy BV">
+
+    <!-- Open Graph -->
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://gerichtskostenrechner.ch/de/betreibung.html">
+    <meta property="og:title" content="Betreibungsrechner Schweiz - Betreibungskosten berechnen">
+    <meta property="og:description" content="Berechnen Sie die Betreibungskosten nach GebV SchKG. Gebühren für Zahlungsbefehl, Pfändung und Verwertung.">
+    <meta property="og:image" content="https://gerichtskostenrechner.ch/images/og-kosten-de.png">
+    <meta property="og:image:width" content="1200">
+    <meta property="og:image:height" content="630">
+    <meta property="og:locale" content="de_CH">
+
+    <!-- Twitter -->
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="Betreibungsrechner Schweiz - Betreibungskosten berechnen">
+    <meta name="twitter:description" content="Berechnen Sie die Betreibungskosten nach GebV SchKG.">
+    <meta name="twitter:image" content="https://gerichtskostenrechner.ch/images/og-kosten-de.png">
+
+    <!-- Canonical & Language -->
+    <link rel="canonical" href="https://gerichtskostenrechner.ch/de/betreibung.html">
+    <link rel="alternate" hreflang="de" href="https://gerichtskostenrechner.ch/de/betreibung.html">
+    <link rel="alternate" hreflang="fr" href="https://gerichtskostenrechner.ch/fr/betreibung.html">
+
+    <!-- JSON-LD -->
+    <script type="application/ld+json">
+    {
+        "@context": "https://schema.org",
+        "@type": "SoftwareApplication",
+        "name": "Schweizer Betreibungsrechner",
+        "description": "Berechnen Sie die Betreibungskosten nach GebV SchKG",
+        "url": "https://gerichtskostenrechner.ch/de/betreibung.html",
+        "applicationCategory": "LegalService",
+        "operatingSystem": "Web",
+        "inLanguage": "de-CH",
+        "offers": {
+            "@type": "Offer",
+            "price": "0",
+            "priceCurrency": "CHF"
+        },
+        "publisher": {
+            "@type": "Organization",
+            "name": "Durchblick Consultancy BV",
+            "url": "https://durchblick.nl"
+        }
+    }
+    </script>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Economica:wght@400;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <link rel="stylesheet" href="../css/styles.css">
+    <style>
+        .tool-nav {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 20px;
+            flex-wrap: wrap;
+        }
+        .tool-nav a {
+            padding: 8px 16px;
+            background: #f5f5f5;
+            border-radius: 4px;
+            text-decoration: none;
+            color: #3f606f;
+            font-family: 'Economica', sans-serif;
+            font-weight: 600;
+            transition: all 0.2s;
+        }
+        .tool-nav a:hover {
+            background: #e0e0e0;
+        }
+        .tool-nav a.active {
+            background: #3f606f;
+            color: white;
+        }
+        .fee-breakdown {
+            background: #f8f9fa;
+            border-radius: 8px;
+            padding: 15px;
+            margin-top: 15px;
+        }
+        .fee-breakdown h4 {
+            margin: 0 0 10px 0;
+            color: #3f606f;
+        }
+        .fee-row {
+            display: flex;
+            justify-content: space-between;
+            padding: 8px 0;
+            border-bottom: 1px solid #eee;
+        }
+        .fee-row:last-child {
+            border-bottom: none;
+            font-weight: bold;
+            padding-top: 12px;
+            margin-top: 5px;
+            border-top: 2px solid #3f606f;
+        }
+        .fee-row .label {
+            color: #666;
+        }
+        .fee-row .amount {
+            font-family: 'Economica', sans-serif;
+            font-weight: 700;
+        }
+        .timeline {
+            position: relative;
+            padding-left: 30px;
+            margin: 20px 0;
+        }
+        .timeline::before {
+            content: '';
+            position: absolute;
+            left: 10px;
+            top: 0;
+            bottom: 0;
+            width: 2px;
+            background: #3f606f;
+        }
+        .timeline-item {
+            position: relative;
+            margin-bottom: 20px;
+        }
+        .timeline-item::before {
+            content: '';
+            position: absolute;
+            left: -24px;
+            top: 5px;
+            width: 10px;
+            height: 10px;
+            border-radius: 50%;
+            background: #3f606f;
+        }
+        .timeline-item h4 {
+            margin: 0 0 5px 0;
+            color: #3f606f;
+        }
+        .timeline-item p {
+            margin: 0;
+            color: #666;
+            font-size: 0.95rem;
+        }
+        .fee-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 15px 0;
+        }
+        .fee-table th, .fee-table td {
+            padding: 10px;
+            text-align: left;
+            border-bottom: 1px solid #eee;
+        }
+        .fee-table th {
+            background: #f5f5f5;
+            font-weight: 600;
+        }
+        .fee-table td:last-child {
+            text-align: right;
+            font-family: 'Economica', sans-serif;
+            font-weight: 700;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header-row">
+            <div class="language-switcher">
+                <a href="../de/betreibung.html" class="lang-btn active">DE</a>
+                <a href="../fr/betreibung.html" class="lang-btn">FR</a>
+            </div>
+        </div>
+
+        <h1><img src="../favicon.svg" alt="" class="title-icon">Betreibungsrechner Schweiz</h1>
+
+        <nav class="tool-nav">
+            <a href="../de/">Gerichtskostenrechner</a>
+            <a href="../de/betreibung.html" class="active">Betreibungsrechner</a>
+        </nav>
+
+        <div class="steps-container">
+            <div class="step-card">
+                <div class="step-icon">
+                    <i class="fas fa-file-invoice-dollar"></i>
+                    <div class="step-number">1</div>
+                </div>
+                <div class="step-content">
+                    <h3>Forderungsbetrag eingeben</h3>
+                    <p>Der Betrag, den Sie eintreiben möchten (inkl. Zinsen und allfällige Nebenkosten).</p>
+                </div>
+            </div>
+
+            <div class="step-card">
+                <div class="step-icon">
+                    <i class="fas fa-list-check"></i>
+                    <div class="step-number">2</div>
+                </div>
+                <div class="step-content">
+                    <h3>Verfahrensschritte wählen</h3>
+                    <p>Wählen Sie die gewünschten Schritte: Zahlungsbefehl, Pfändung, Verwertung.</p>
+                </div>
+            </div>
+
+            <div class="step-card">
+                <div class="step-icon">
+                    <i class="fas fa-calculator"></i>
+                    <div class="step-number">3</div>
+                </div>
+                <div class="step-content">
+                    <h3>Kosten berechnen</h3>
+                    <p>Erhalten Sie eine Aufstellung aller Betreibungskosten nach GebV SchKG.</p>
+                </div>
+            </div>
+        </div>
+
+        <div class="calculator-card">
+            <form id="betreibungForm">
+                <div class="form-group">
+                    <label for="forderung" class="required">Forderungsbetrag (CHF)
+                        <span class="info-tooltip">
+                            <span class="info-icon">?</span>
+                            <span class="tooltip-content">Der einzutreibende Betrag inkl. Zinsen. Betreibungskosten werden zusätzlich geschuldet.</span>
+                        </span>
+                    </label>
+                    <div class="currency-input-wrapper">
+                        <input type="text"
+                               id="forderung"
+                               name="forderung"
+                               required
+                               placeholder="z.B. 5'000.00"
+                               title="Forderungsbetrag in CHF">
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label>Betreibungsschritte
+                        <span class="info-tooltip">
+                            <span class="info-icon">?</span>
+                            <span class="tooltip-content">Wählen Sie alle Schritte, die Sie durchführen möchten. Jeder Schritt verursacht Kosten.</span>
+                        </span>
+                    </label>
+                    <div class="checkbox-group" style="display: flex; flex-direction: column; gap: 10px; margin-top: 10px;">
+                        <label class="checkbox-label">
+                            <input type="checkbox" id="zahlungsbefehl" name="zahlungsbefehl" checked>
+                            Zahlungsbefehl (Einleitung der Betreibung)
+                        </label>
+                        <label class="checkbox-label">
+                            <input type="checkbox" id="fortsetzung" name="fortsetzung">
+                            Fortsetzungsbegehren (nach Ablauf der Zahlungsfrist)
+                        </label>
+                        <label class="checkbox-label">
+                            <input type="checkbox" id="pfaendung" name="pfaendung">
+                            Pfändungsvollzug
+                        </label>
+                        <label class="checkbox-label">
+                            <input type="checkbox" id="verwertung" name="verwertung">
+                            Verwertung (Versteigerung/Verkauf)
+                        </label>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label for="betreibungsart">Betreibungsart
+                        <span class="info-tooltip">
+                            <span class="info-icon">?</span>
+                            <span class="tooltip-content">Im HR eingetragene Firmen werden auf Konkurs betrieben. Privatpersonen und nicht eingetragene Firmen auf Pfändung.</span>
+                        </span>
+                    </label>
+                    <select id="betreibungsart" name="betreibungsart">
+                        <option value="pfaendung">Betreibung auf Pfändung (Privatperson)</option>
+                        <option value="konkurs">Betreibung auf Konkurs (HR-Firma)</option>
+                    </select>
+                </div>
+
+                <div class="warning">
+                    <i class="fas fa-exclamation-triangle"></i>
+                    Die Betreibungskosten werden vom Schuldner geschuldet, müssen aber vom Gläubiger vorgeschossen werden (Art. 68 SchKG).
+                </div>
+
+                <button type="submit">Kosten berechnen</button>
+            </form>
+
+            <div id="result" class="result" style="display: none;"></div>
+        </div>
+
+        <div class="info-cards-container">
+            <div class="info-step-card highlight">
+                <div class="step-icon">
+                    <i class="fas fa-route"></i>
+                </div>
+                <div class="step-content">
+                    <h3>Ablauf einer Betreibung</h3>
+                    <div class="timeline">
+                        <div class="timeline-item">
+                            <h4>1. Betreibungsbegehren</h4>
+                            <p>Gläubiger stellt Antrag beim Betreibungsamt</p>
+                        </div>
+                        <div class="timeline-item">
+                            <h4>2. Zahlungsbefehl</h4>
+                            <p>Schuldner erhält 20 Tage Zahlungsfrist</p>
+                        </div>
+                        <div class="timeline-item">
+                            <h4>3. Rechtsvorschlag?</h4>
+                            <p>Schuldner kann innert 10 Tagen Einspruch erheben</p>
+                        </div>
+                        <div class="timeline-item">
+                            <h4>4. Fortsetzung</h4>
+                            <p>Nach 20 Tagen bis 1 Jahr möglich</p>
+                        </div>
+                        <div class="timeline-item">
+                            <h4>5. Pfändung/Konkurs</h4>
+                            <p>Vermögenswerte werden gepfändet oder Konkurs eröffnet</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="info-step-card">
+                <div class="step-icon">
+                    <i class="fas fa-coins"></i>
+                </div>
+                <div class="step-content">
+                    <h3>Gebührentarif (GebV SchKG Art. 16)</h3>
+                    <table class="fee-table">
+                        <thead>
+                            <tr>
+                                <th>Forderung</th>
+                                <th>Gebühr</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr><td>bis CHF 100</td><td>CHF 7</td></tr>
+                            <tr><td>CHF 100 – 500</td><td>CHF 20</td></tr>
+                            <tr><td>CHF 500 – 1'000</td><td>CHF 40</td></tr>
+                            <tr><td>CHF 1'000 – 10'000</td><td>CHF 60</td></tr>
+                            <tr><td>CHF 10'000 – 100'000</td><td>CHF 90</td></tr>
+                            <tr><td>CHF 100'000 – 1'000'000</td><td>CHF 190</td></tr>
+                            <tr><td>über CHF 1'000'000</td><td>CHF 400</td></tr>
+                        </tbody>
+                    </table>
+                    <small>Zusätzlich fallen Porto- und Zustellkosten an.</small>
+                </div>
+            </div>
+
+            <div class="info-step-card">
+                <div class="step-icon">
+                    <i class="fas fa-gavel"></i>
+                </div>
+                <div class="step-content">
+                    <h3>Rechtsvorschlag</h3>
+                    <p>Der Schuldner kann innert <strong>10 Tagen</strong> Rechtsvorschlag erheben. Dann muss der Gläubiger:</p>
+                    <ul>
+                        <li><strong>Rechtsöffnung</strong> beantragen (bei Schuldanerkennung)</li>
+                        <li>oder <strong>Klage</strong> erheben (bei bestrittener Forderung)</li>
+                    </ul>
+                    <p>Rechtsöffnung: ca. CHF 150–300 Gerichtskosten</p>
+                </div>
+            </div>
+
+            <div class="info-step-card">
+                <div class="step-icon">
+                    <i class="fas fa-hand-holding-usd"></i>
+                </div>
+                <div class="step-content">
+                    <h3>Wer trägt die Kosten?</h3>
+                    <p>Grundsätzlich trägt der <strong>Schuldner</strong> die Betreibungskosten (Art. 68 SchKG).</p>
+                    <p>Der <strong>Gläubiger</strong> muss sie jedoch <strong>vorschiessen</strong>. Ohne Vorschuss wird das Betreibungsamt nicht tätig.</p>
+                    <p>Bei erfolgreicher Betreibung werden die Kosten zur Forderung addiert.</p>
+                </div>
+            </div>
+
+            <div class="info-step-card">
+                <div class="step-icon">
+                    <i class="fas fa-file-alt"></i>
+                </div>
+                <div class="step-content">
+                    <h3>Verlustschein</h3>
+                    <p>Kann die Forderung nicht (vollständig) gedeckt werden, erhält der Gläubiger einen <strong>Verlustschein</strong>.</p>
+                    <p>Dieser:</p>
+                    <ul>
+                        <li>Verjährt erst nach <strong>20 Jahren</strong></li>
+                        <li>Ermöglicht jederzeit neue Betreibung ohne Kostenvorschuss</li>
+                        <li>Ist ein vollstreckbarer Titel</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <div class="law-section">
+            <h2>Gesetzliche Grundlagen</h2>
+            <p class="law-subtitle">Bundesgesetz über Schuldbetreibung und Konkurs (SchKG)</p>
+
+            <div class="law-card">
+                <div class="law-header">
+                    <h3><a href="https://www.fedlex.admin.ch/eli/cc/11/529_488_529/de#art_68" target="_blank" rel="noopener">Art. 68 SchKG – Betreibungskosten <i class="fas fa-external-link-alt"></i></a></h3>
+                </div>
+                <div class="law-content">
+                    <ol>
+                        <li>Der Schuldner trägt die Betreibungskosten. Dieselben sind vom Gläubiger vorzuschiessen. Wird der Vorschuss nicht geleistet, so kann das Betreibungsamt seine Handlungen einstweilen unterlassen.</li>
+                        <li>Der Gläubiger ist berechtigt, von den Zahlungen des Schuldners die Betreibungskosten vorab zu erheben.</li>
+                    </ol>
+                </div>
+            </div>
+
+            <div class="law-card">
+                <div class="law-header">
+                    <h3><a href="https://www.fedlex.admin.ch/eli/cc/11/529_488_529/de#art_69" target="_blank" rel="noopener">Art. 69 SchKG – Betreibungsbegehren <i class="fas fa-external-link-alt"></i></a></h3>
+                </div>
+                <div class="law-content">
+                    <ol>
+                        <li>Nach Empfang des Betreibungsbegehrens erlässt das Betreibungsamt den Zahlungsbefehl.</li>
+                        <li>Der Zahlungsbefehl enthält:
+                            <ol type="a">
+                                <li>die Angaben des Betreibungsbegehrens;</li>
+                                <li>die Aufforderung, binnen 20 Tagen den Gläubiger zu befriedigen;</li>
+                                <li>die Mitteilung, dass der Schuldner binnen 10 Tagen Rechtsvorschlag erheben kann.</li>
+                            </ol>
+                        </li>
+                    </ol>
+                </div>
+            </div>
+
+            <div class="law-card">
+                <div class="law-header">
+                    <h3><a href="https://www.fedlex.admin.ch/eli/cc/1995/4946_4946_4946/de#art_16" target="_blank" rel="noopener">Art. 16 GebV SchKG – Zahlungsbefehl <i class="fas fa-external-link-alt"></i></a></h3>
+                </div>
+                <div class="law-content">
+                    <p>Die Gebühr für den Erlass, die doppelte Ausfertigung, die Eintragung und die Zustellung des Zahlungsbefehls bemisst sich nach der Forderung (ohne Zinsen und Kosten).</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <footer class="site-footer">
+        <div class="footer-content">
+            <p>
+                <a href="https://durchblick.nl/tools_de.html" target="_blank" rel="noopener">Durchblick Consultancy BV</a>
+                &nbsp;•&nbsp;
+                <a href="https://github.com/durchblick-nl/gerichtskostenrechner" target="_blank" rel="noopener">
+                    <i class="fab fa-github"></i> Quellcode auf GitHub
+                </a>
+            </p>
+            <p class="footer-disclaimer">Dieser Rechner dient nur zur Orientierung. Keine Rechtsberatung.</p>
+        </div>
+    </footer>
+
+    <script>
+        // Fee structure based on GebV SchKG Art. 16
+        const FEE_TIERS = [
+            { max: 100, fee: 7 },
+            { max: 500, fee: 20 },
+            { max: 1000, fee: 40 },
+            { max: 10000, fee: 60 },
+            { max: 100000, fee: 90 },
+            { max: 1000000, fee: 190 },
+            { max: Infinity, fee: 400 }
+        ];
+
+        function getFeeForAmount(amount) {
+            for (const tier of FEE_TIERS) {
+                if (amount <= tier.max) {
+                    return tier.fee;
+                }
+            }
+            return 400;
+        }
+
+        function formatCurrency(amount) {
+            return amount.toLocaleString('de-CH', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
+        }
+
+        function parseAmount(str) {
+            return parseFloat(str.replace(/['',]/g, '').replace(/\s/g, '')) || 0;
+        }
+
+        // Format input as Swiss currency
+        document.getElementById('forderung').addEventListener('blur', function() {
+            const value = parseAmount(this.value);
+            if (value > 0) {
+                this.value = formatCurrency(value);
+            }
+        });
+
+        document.getElementById('betreibungForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+
+            const forderung = parseAmount(document.getElementById('forderung').value);
+            if (forderung <= 0) {
+                alert('Bitte geben Sie einen gültigen Forderungsbetrag ein.');
+                return;
+            }
+
+            const zahlungsbefehl = document.getElementById('zahlungsbefehl').checked;
+            const fortsetzung = document.getElementById('fortsetzung').checked;
+            const pfaendung = document.getElementById('pfaendung').checked;
+            const verwertung = document.getElementById('verwertung').checked;
+            const betreibungsart = document.getElementById('betreibungsart').value;
+
+            const baseFee = getFeeForAmount(forderung);
+
+            let costs = [];
+            let total = 0;
+
+            if (zahlungsbefehl) {
+                const fee = baseFee;
+                costs.push({ label: 'Zahlungsbefehl (Art. 16 GebV)', amount: fee });
+                total += fee;
+            }
+
+            if (fortsetzung) {
+                const fee = Math.round(baseFee * 0.5); // Art. 19: half of base fee
+                costs.push({ label: 'Fortsetzungsbegehren (Art. 19 GebV)', amount: fee });
+                total += fee;
+            }
+
+            if (pfaendung) {
+                const fee = baseFee; // Art. 20: same as base fee
+                costs.push({ label: 'Pfändungsvollzug (Art. 20 GebV)', amount: fee });
+                total += fee;
+            }
+
+            if (verwertung) {
+                const fee = Math.round(baseFee * 1.5); // Art. 21: higher fee for realization
+                costs.push({ label: 'Verwertung (Art. 21 GebV)', amount: fee });
+                total += fee;
+            }
+
+            // Add estimated postage/delivery costs
+            const postage = 14; // Approximate postage for registered mail
+            costs.push({ label: 'Porto/Zustellung (geschätzt)', amount: postage });
+            total += postage;
+
+            // Build result HTML
+            let resultHTML = `
+                <h3>Betreibungskosten</h3>
+                <div class="result-summary">
+                    <div class="result-row">
+                        <span class="result-label">Forderungsbetrag:</span>
+                        <span class="result-value">CHF ${formatCurrency(forderung)}</span>
+                    </div>
+                    <div class="result-row">
+                        <span class="result-label">Betreibungsart:</span>
+                        <span class="result-value">${betreibungsart === 'konkurs' ? 'Auf Konkurs' : 'Auf Pfändung'}</span>
+                    </div>
+                </div>
+
+                <div class="fee-breakdown">
+                    <h4>Kostenaufstellung</h4>
+                    ${costs.map(c => `
+                        <div class="fee-row">
+                            <span class="label">${c.label}</span>
+                            <span class="amount">CHF ${formatCurrency(c.amount)}</span>
+                        </div>
+                    `).join('')}
+                    <div class="fee-row">
+                        <span class="label">Total Betreibungskosten</span>
+                        <span class="amount">CHF ${formatCurrency(total)}</span>
+                    </div>
+                </div>
+
+                <div class="warning" style="margin-top: 20px;">
+                    <i class="fas fa-info-circle"></i>
+                    <strong>Hinweis:</strong> Bei Rechtsvorschlag fallen zusätzlich Gerichtskosten für die Rechtsöffnung an (ca. CHF 150–300).
+                </div>
+            `;
+
+            if (betreibungsart === 'konkurs') {
+                resultHTML += `
+                    <div class="warning" style="margin-top: 10px;">
+                        <i class="fas fa-exclamation-triangle"></i>
+                        <strong>Konkurs:</strong> Bei Betreibung auf Konkurs kann statt der Pfändung der Konkurs eröffnet werden. Die Kosten für ein Konkursverfahren sind erheblich höher.
+                    </div>
+                `;
+            }
+
+            document.getElementById('result').innerHTML = resultHTML;
+            document.getElementById('result').style.display = 'block';
+            document.getElementById('result').scrollIntoView({ behavior: 'smooth' });
+        });
+    </script>
+</body>
+</html>

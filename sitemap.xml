@@ -42,4 +42,24 @@
         <xhtml:link rel="alternate" hreflang="fr" href="https://gerichtskostenrechner.ch/fr/kosten.html"/>
     </url>
 
+    <!-- German Betreibungsrechner -->
+    <url>
+        <loc>https://gerichtskostenrechner.ch/de/betreibung.html</loc>
+        <lastmod>2025-11-23</lastmod>
+        <changefreq>monthly</changefreq>
+        <priority>0.8</priority>
+        <xhtml:link rel="alternate" hreflang="de" href="https://gerichtskostenrechner.ch/de/betreibung.html"/>
+        <xhtml:link rel="alternate" hreflang="fr" href="https://gerichtskostenrechner.ch/fr/betreibung.html"/>
+    </url>
+
+    <!-- French Betreibungsrechner -->
+    <url>
+        <loc>https://gerichtskostenrechner.ch/fr/betreibung.html</loc>
+        <lastmod>2025-11-23</lastmod>
+        <changefreq>monthly</changefreq>
+        <priority>0.8</priority>
+        <xhtml:link rel="alternate" hreflang="de" href="https://gerichtskostenrechner.ch/de/betreibung.html"/>
+        <xhtml:link rel="alternate" hreflang="fr" href="https://gerichtskostenrechner.ch/fr/betreibung.html"/>
+    </url>
+
 </urlset>

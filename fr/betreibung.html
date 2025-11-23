@@ -1,0 +1,589 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Calculateur de poursuite Suisse - Frais de poursuite</title>
+    <link rel="icon" type="image/svg+xml" href="../favicon.svg">
+    <meta name="description" content="Calculez les frais de poursuite selon OELP. Frais de commandement de payer, saisie, réalisation et faillite.">
+    <meta name="keywords" content="calculateur poursuite, frais poursuite, LP, OELP, commandement de payer, saisie, réalisation, faillite, Suisse">
+    <meta name="author" content="Durchblick Consultancy BV">
+
+    <!-- Open Graph -->
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://gerichtskostenrechner.ch/fr/betreibung.html">
+    <meta property="og:title" content="Calculateur de poursuite Suisse - Frais de poursuite">
+    <meta property="og:description" content="Calculez les frais de poursuite selon OELP. Frais de commandement de payer, saisie et réalisation.">
+    <meta property="og:image" content="https://gerichtskostenrechner.ch/images/og-kosten-fr.png">
+    <meta property="og:image:width" content="1200">
+    <meta property="og:image:height" content="630">
+    <meta property="og:locale" content="fr_CH">
+
+    <!-- Twitter -->
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="Calculateur de poursuite Suisse - Frais de poursuite">
+    <meta name="twitter:description" content="Calculez les frais de poursuite selon OELP.">
+    <meta name="twitter:image" content="https://gerichtskostenrechner.ch/images/og-kosten-fr.png">
+
+    <!-- Canonical & Language -->
+    <link rel="canonical" href="https://gerichtskostenrechner.ch/fr/betreibung.html">
+    <link rel="alternate" hreflang="de" href="https://gerichtskostenrechner.ch/de/betreibung.html">
+    <link rel="alternate" hreflang="fr" href="https://gerichtskostenrechner.ch/fr/betreibung.html">
+
+    <!-- JSON-LD -->
+    <script type="application/ld+json">
+    {
+        "@context": "https://schema.org",
+        "@type": "SoftwareApplication",
+        "name": "Calculateur de poursuite suisse",
+        "description": "Calculez les frais de poursuite selon OELP",
+        "url": "https://gerichtskostenrechner.ch/fr/betreibung.html",
+        "applicationCategory": "LegalService",
+        "operatingSystem": "Web",
+        "inLanguage": "fr-CH",
+        "offers": {
+            "@type": "Offer",
+            "price": "0",
+            "priceCurrency": "CHF"
+        },
+        "publisher": {
+            "@type": "Organization",
+            "name": "Durchblick Consultancy BV",
+            "url": "https://durchblick.nl"
+        }
+    }
+    </script>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Economica:wght@400;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <link rel="stylesheet" href="../css/styles.css">
+    <style>
+        .tool-nav {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 20px;
+            flex-wrap: wrap;
+        }
+        .tool-nav a {
+            padding: 8px 16px;
+            background: #f5f5f5;
+            border-radius: 4px;
+            text-decoration: none;
+            color: #3f606f;
+            font-family: 'Economica', sans-serif;
+            font-weight: 600;
+            transition: all 0.2s;
+        }
+        .tool-nav a:hover {
+            background: #e0e0e0;
+        }
+        .tool-nav a.active {
+            background: #3f606f;
+            color: white;
+        }
+        .fee-breakdown {
+            background: #f8f9fa;
+            border-radius: 8px;
+            padding: 15px;
+            margin-top: 15px;
+        }
+        .fee-breakdown h4 {
+            margin: 0 0 10px 0;
+            color: #3f606f;
+        }
+        .fee-row {
+            display: flex;
+            justify-content: space-between;
+            padding: 8px 0;
+            border-bottom: 1px solid #eee;
+        }
+        .fee-row:last-child {
+            border-bottom: none;
+            font-weight: bold;
+            padding-top: 12px;
+            margin-top: 5px;
+            border-top: 2px solid #3f606f;
+        }
+        .fee-row .label {
+            color: #666;
+        }
+        .fee-row .amount {
+            font-family: 'Economica', sans-serif;
+            font-weight: 700;
+        }
+        .timeline {
+            position: relative;
+            padding-left: 30px;
+            margin: 20px 0;
+        }
+        .timeline::before {
+            content: '';
+            position: absolute;
+            left: 10px;
+            top: 0;
+            bottom: 0;
+            width: 2px;
+            background: #3f606f;
+        }
+        .timeline-item {
+            position: relative;
+            margin-bottom: 20px;
+        }
+        .timeline-item::before {
+            content: '';
+            position: absolute;
+            left: -24px;
+            top: 5px;
+            width: 10px;
+            height: 10px;
+            border-radius: 50%;
+            background: #3f606f;
+        }
+        .timeline-item h4 {
+            margin: 0 0 5px 0;
+            color: #3f606f;
+        }
+        .timeline-item p {
+            margin: 0;
+            color: #666;
+            font-size: 0.95rem;
+        }
+        .fee-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 15px 0;
+        }
+        .fee-table th, .fee-table td {
+            padding: 10px;
+            text-align: left;
+            border-bottom: 1px solid #eee;
+        }
+        .fee-table th {
+            background: #f5f5f5;
+            font-weight: 600;
+        }
+        .fee-table td:last-child {
+            text-align: right;
+            font-family: 'Economica', sans-serif;
+            font-weight: 700;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header-row">
+            <div class="language-switcher">
+                <a href="../de/betreibung.html" class="lang-btn">DE</a>
+                <a href="../fr/betreibung.html" class="lang-btn active">FR</a>
+            </div>
+        </div>
+
+        <h1><img src="../favicon.svg" alt="" class="title-icon">Calculateur de poursuite Suisse</h1>
+
+        <nav class="tool-nav">
+            <a href="../fr/">Frais de justice</a>
+            <a href="../fr/betreibung.html" class="active">Frais de poursuite</a>
+        </nav>
+
+        <div class="steps-container">
+            <div class="step-card">
+                <div class="step-icon">
+                    <i class="fas fa-file-invoice-dollar"></i>
+                    <div class="step-number">1</div>
+                </div>
+                <div class="step-content">
+                    <h3>Entrer le montant de la créance</h3>
+                    <p>Le montant que vous souhaitez recouvrer (y compris intérêts et frais accessoires).</p>
+                </div>
+            </div>
+
+            <div class="step-card">
+                <div class="step-icon">
+                    <i class="fas fa-list-check"></i>
+                    <div class="step-number">2</div>
+                </div>
+                <div class="step-content">
+                    <h3>Choisir les étapes</h3>
+                    <p>Sélectionnez les étapes souhaitées: commandement de payer, saisie, réalisation.</p>
+                </div>
+            </div>
+
+            <div class="step-card">
+                <div class="step-icon">
+                    <i class="fas fa-calculator"></i>
+                    <div class="step-number">3</div>
+                </div>
+                <div class="step-content">
+                    <h3>Calculer les frais</h3>
+                    <p>Obtenez un récapitulatif des frais de poursuite selon OELP.</p>
+                </div>
+            </div>
+        </div>
+
+        <div class="calculator-card">
+            <form id="betreibungForm">
+                <div class="form-group">
+                    <label for="forderung" class="required">Montant de la créance (CHF)
+                        <span class="info-tooltip">
+                            <span class="info-icon">?</span>
+                            <span class="tooltip-content">Le montant à recouvrer y compris les intérêts. Les frais de poursuite s'ajoutent.</span>
+                        </span>
+                    </label>
+                    <div class="currency-input-wrapper">
+                        <input type="text"
+                               id="forderung"
+                               name="forderung"
+                               required
+                               placeholder="p.ex. 5'000.00"
+                               title="Montant de la créance en CHF">
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label>Étapes de la poursuite
+                        <span class="info-tooltip">
+                            <span class="info-icon">?</span>
+                            <span class="tooltip-content">Sélectionnez toutes les étapes que vous souhaitez effectuer. Chaque étape génère des frais.</span>
+                        </span>
+                    </label>
+                    <div class="checkbox-group" style="display: flex; flex-direction: column; gap: 10px; margin-top: 10px;">
+                        <label class="checkbox-label">
+                            <input type="checkbox" id="zahlungsbefehl" name="zahlungsbefehl" checked>
+                            Commandement de payer (introduction de la poursuite)
+                        </label>
+                        <label class="checkbox-label">
+                            <input type="checkbox" id="fortsetzung" name="fortsetzung">
+                            Réquisition de continuer (après délai de paiement)
+                        </label>
+                        <label class="checkbox-label">
+                            <input type="checkbox" id="pfaendung" name="pfaendung">
+                            Exécution de la saisie
+                        </label>
+                        <label class="checkbox-label">
+                            <input type="checkbox" id="verwertung" name="verwertung">
+                            Réalisation (vente aux enchères/vente)
+                        </label>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label for="betreibungsart">Type de poursuite
+                        <span class="info-tooltip">
+                            <span class="info-icon">?</span>
+                            <span class="tooltip-content">Les entreprises inscrites au RC sont poursuivies par voie de faillite. Les particuliers et entreprises non inscrites par voie de saisie.</span>
+                        </span>
+                    </label>
+                    <select id="betreibungsart" name="betreibungsart">
+                        <option value="pfaendung">Poursuite par voie de saisie (particulier)</option>
+                        <option value="konkurs">Poursuite par voie de faillite (société RC)</option>
+                    </select>
+                </div>
+
+                <div class="warning">
+                    <i class="fas fa-exclamation-triangle"></i>
+                    Les frais de poursuite sont dus par le débiteur, mais doivent être avancés par le créancier (art. 68 LP).
+                </div>
+
+                <button type="submit">Calculer les frais</button>
+            </form>
+
+            <div id="result" class="result" style="display: none;"></div>
+        </div>
+
+        <div class="info-cards-container">
+            <div class="info-step-card highlight">
+                <div class="step-icon">
+                    <i class="fas fa-route"></i>
+                </div>
+                <div class="step-content">
+                    <h3>Déroulement d'une poursuite</h3>
+                    <div class="timeline">
+                        <div class="timeline-item">
+                            <h4>1. Réquisition de poursuite</h4>
+                            <p>Le créancier dépose une demande à l'office des poursuites</p>
+                        </div>
+                        <div class="timeline-item">
+                            <h4>2. Commandement de payer</h4>
+                            <p>Le débiteur a 20 jours pour payer</p>
+                        </div>
+                        <div class="timeline-item">
+                            <h4>3. Opposition?</h4>
+                            <p>Le débiteur peut faire opposition dans les 10 jours</p>
+                        </div>
+                        <div class="timeline-item">
+                            <h4>4. Continuation</h4>
+                            <p>Possible après 20 jours jusqu'à 1 an</p>
+                        </div>
+                        <div class="timeline-item">
+                            <h4>5. Saisie/Faillite</h4>
+                            <p>Les biens sont saisis ou la faillite est prononcée</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="info-step-card">
+                <div class="step-icon">
+                    <i class="fas fa-coins"></i>
+                </div>
+                <div class="step-content">
+                    <h3>Tarif des émoluments (OELP art. 16)</h3>
+                    <table class="fee-table">
+                        <thead>
+                            <tr>
+                                <th>Créance</th>
+                                <th>Émolument</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr><td>jusqu'à CHF 100</td><td>CHF 7</td></tr>
+                            <tr><td>CHF 100 – 500</td><td>CHF 20</td></tr>
+                            <tr><td>CHF 500 – 1'000</td><td>CHF 40</td></tr>
+                            <tr><td>CHF 1'000 – 10'000</td><td>CHF 60</td></tr>
+                            <tr><td>CHF 10'000 – 100'000</td><td>CHF 90</td></tr>
+                            <tr><td>CHF 100'000 – 1'000'000</td><td>CHF 190</td></tr>
+                            <tr><td>plus de CHF 1'000'000</td><td>CHF 400</td></tr>
+                        </tbody>
+                    </table>
+                    <small>Des frais de port et de notification s'ajoutent.</small>
+                </div>
+            </div>
+
+            <div class="info-step-card">
+                <div class="step-icon">
+                    <i class="fas fa-gavel"></i>
+                </div>
+                <div class="step-content">
+                    <h3>Opposition</h3>
+                    <p>Le débiteur peut faire opposition dans les <strong>10 jours</strong>. Le créancier doit alors:</p>
+                    <ul>
+                        <li>Demander la <strong>mainlevée</strong> (en cas de reconnaissance de dette)</li>
+                        <li>ou <strong>intenter action</strong> (en cas de créance contestée)</li>
+                    </ul>
+                    <p>Mainlevée: env. CHF 150–300 de frais de justice</p>
+                </div>
+            </div>
+
+            <div class="info-step-card">
+                <div class="step-icon">
+                    <i class="fas fa-hand-holding-usd"></i>
+                </div>
+                <div class="step-content">
+                    <h3>Qui paie les frais?</h3>
+                    <p>En principe, le <strong>débiteur</strong> supporte les frais de poursuite (art. 68 LP).</p>
+                    <p>Le <strong>créancier</strong> doit toutefois les <strong>avancer</strong>. Sans avance, l'office des poursuites n'agit pas.</p>
+                    <p>En cas de poursuite réussie, les frais s'ajoutent à la créance.</p>
+                </div>
+            </div>
+
+            <div class="info-step-card">
+                <div class="step-icon">
+                    <i class="fas fa-file-alt"></i>
+                </div>
+                <div class="step-content">
+                    <h3>Acte de défaut de biens</h3>
+                    <p>Si la créance ne peut être (entièrement) couverte, le créancier reçoit un <strong>acte de défaut de biens</strong>.</p>
+                    <p>Celui-ci:</p>
+                    <ul>
+                        <li>Ne se prescrit qu'après <strong>20 ans</strong></li>
+                        <li>Permet une nouvelle poursuite sans avance de frais</li>
+                        <li>Est un titre exécutoire</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <div class="law-section">
+            <h2>Bases légales</h2>
+            <p class="law-subtitle">Loi fédérale sur la poursuite pour dettes et la faillite (LP)</p>
+
+            <div class="law-card">
+                <div class="law-header">
+                    <h3><a href="https://www.fedlex.admin.ch/eli/cc/11/529_488_529/fr#art_68" target="_blank" rel="noopener">Art. 68 LP – Frais de poursuite <i class="fas fa-external-link-alt"></i></a></h3>
+                </div>
+                <div class="law-content">
+                    <ol>
+                        <li>Les frais de la poursuite sont à la charge du débiteur. Le créancier en fait l'avance. L'office peut différer toute opération dont les frais n'ont pas été avancés.</li>
+                        <li>Le créancier peut prélever les frais de poursuite sur les premiers versements du débiteur.</li>
+                    </ol>
+                </div>
+            </div>
+
+            <div class="law-card">
+                <div class="law-header">
+                    <h3><a href="https://www.fedlex.admin.ch/eli/cc/11/529_488_529/fr#art_69" target="_blank" rel="noopener">Art. 69 LP – Réquisition de poursuite <i class="fas fa-external-link-alt"></i></a></h3>
+                </div>
+                <div class="law-content">
+                    <ol>
+                        <li>Dès réception de la réquisition de poursuite, l'office dresse le commandement de payer.</li>
+                        <li>Le commandement de payer contient:
+                            <ol type="a">
+                                <li>les indications de la réquisition de poursuite;</li>
+                                <li>la sommation de payer dans les vingt jours;</li>
+                                <li>l'avis que le débiteur peut former opposition dans les dix jours.</li>
+                            </ol>
+                        </li>
+                    </ol>
+                </div>
+            </div>
+
+            <div class="law-card">
+                <div class="law-header">
+                    <h3><a href="https://www.fedlex.admin.ch/eli/cc/1995/4946_4946_4946/fr#art_16" target="_blank" rel="noopener">Art. 16 OELP – Commandement de payer <i class="fas fa-external-link-alt"></i></a></h3>
+                </div>
+                <div class="law-content">
+                    <p>L'émolument pour l'établissement, l'expédition en double, l'inscription et la notification du commandement de payer est calculé d'après le montant de la créance (sans les intérêts ni les frais).</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <footer class="site-footer">
+        <div class="footer-content">
+            <p>
+                <a href="https://durchblick.nl/tools_fr.html" target="_blank" rel="noopener">Durchblick Consultancy BV</a>
+                &nbsp;•&nbsp;
+                <a href="https://github.com/durchblick-nl/gerichtskostenrechner" target="_blank" rel="noopener">
+                    <i class="fab fa-github"></i> Code source sur GitHub
+                </a>
+            </p>
+            <p class="footer-disclaimer">Ce calculateur sert uniquement d'orientation. Pas de conseil juridique.</p>
+        </div>
+    </footer>
+
+    <script>
+        // Fee structure based on OELP Art. 16
+        const FEE_TIERS = [
+            { max: 100, fee: 7 },
+            { max: 500, fee: 20 },
+            { max: 1000, fee: 40 },
+            { max: 10000, fee: 60 },
+            { max: 100000, fee: 90 },
+            { max: 1000000, fee: 190 },
+            { max: Infinity, fee: 400 }
+        ];
+
+        function getFeeForAmount(amount) {
+            for (const tier of FEE_TIERS) {
+                if (amount <= tier.max) {
+                    return tier.fee;
+                }
+            }
+            return 400;
+        }
+
+        function formatCurrency(amount) {
+            return amount.toLocaleString('fr-CH', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
+        }
+
+        function parseAmount(str) {
+            return parseFloat(str.replace(/['',]/g, '').replace(/\s/g, '')) || 0;
+        }
+
+        // Format input as Swiss currency
+        document.getElementById('forderung').addEventListener('blur', function() {
+            const value = parseAmount(this.value);
+            if (value > 0) {
+                this.value = formatCurrency(value);
+            }
+        });
+
+        document.getElementById('betreibungForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+
+            const forderung = parseAmount(document.getElementById('forderung').value);
+            if (forderung <= 0) {
+                alert('Veuillez entrer un montant de créance valide.');
+                return;
+            }
+
+            const zahlungsbefehl = document.getElementById('zahlungsbefehl').checked;
+            const fortsetzung = document.getElementById('fortsetzung').checked;
+            const pfaendung = document.getElementById('pfaendung').checked;
+            const verwertung = document.getElementById('verwertung').checked;
+            const betreibungsart = document.getElementById('betreibungsart').value;
+
+            const baseFee = getFeeForAmount(forderung);
+
+            let costs = [];
+            let total = 0;
+
+            if (zahlungsbefehl) {
+                const fee = baseFee;
+                costs.push({ label: 'Commandement de payer (art. 16 OELP)', amount: fee });
+                total += fee;
+            }
+
+            if (fortsetzung) {
+                const fee = Math.round(baseFee * 0.5);
+                costs.push({ label: 'Réquisition de continuer (art. 19 OELP)', amount: fee });
+                total += fee;
+            }
+
+            if (pfaendung) {
+                const fee = baseFee;
+                costs.push({ label: 'Exécution de la saisie (art. 20 OELP)', amount: fee });
+                total += fee;
+            }
+
+            if (verwertung) {
+                const fee = Math.round(baseFee * 1.5);
+                costs.push({ label: 'Réalisation (art. 21 OELP)', amount: fee });
+                total += fee;
+            }
+
+            const postage = 14;
+            costs.push({ label: 'Port/notification (estimation)', amount: postage });
+            total += postage;
+
+            let resultHTML = `
+                <h3>Frais de poursuite</h3>
+                <div class="result-summary">
+                    <div class="result-row">
+                        <span class="result-label">Montant de la créance:</span>
+                        <span class="result-value">CHF ${formatCurrency(forderung)}</span>
+                    </div>
+                    <div class="result-row">
+                        <span class="result-label">Type de poursuite:</span>
+                        <span class="result-value">${betreibungsart === 'konkurs' ? 'Par voie de faillite' : 'Par voie de saisie'}</span>
+                    </div>
+                </div>
+
+                <div class="fee-breakdown">
+                    <h4>Détail des frais</h4>
+                    ${costs.map(c => `
+                        <div class="fee-row">
+                            <span class="label">${c.label}</span>
+                            <span class="amount">CHF ${formatCurrency(c.amount)}</span>
+                        </div>
+                    `).join('')}
+                    <div class="fee-row">
+                        <span class="label">Total frais de poursuite</span>
+                        <span class="amount">CHF ${formatCurrency(total)}</span>
+                    </div>
+                </div>
+
+                <div class="warning" style="margin-top: 20px;">
+                    <i class="fas fa-info-circle"></i>
+                    <strong>Remarque:</strong> En cas d'opposition, des frais de justice supplémentaires pour la mainlevée s'ajoutent (env. CHF 150–300).
+                </div>
+            `;
+
+            if (betreibungsart === 'konkurs') {
+                resultHTML += `
+                    <div class="warning" style="margin-top: 10px;">
+                        <i class="fas fa-exclamation-triangle"></i>
+                        <strong>Faillite:</strong> En cas de poursuite par voie de faillite, la faillite peut être prononcée au lieu de la saisie. Les frais d'une procédure de faillite sont considérablement plus élevés.
+                    </div>
+                `;
+            }
+
+            document.getElementById('result').innerHTML = resultHTML;
+            document.getElementById('result').style.display = 'block';
+            document.getElementById('result').scrollIntoView({ behavior: 'smooth' });
+        });
+    </script>
+</body>
+</html>
