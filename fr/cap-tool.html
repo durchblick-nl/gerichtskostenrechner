@@ -643,6 +643,10 @@
             <div class="warning-box" id="streitwert-warning">
                 <strong>Note Art. 199 CPC:</strong> Pour une valeur litigieuse supérieure à CHF 100'000, les parties peuvent renoncer à la procédure de conciliation (opt-out). Cela peut faire gagner du temps et réduire les coûts.
             </div>
+
+            <div class="warning-box" id="streitwert-instanz-warning">
+                <strong>Note valeur litigieuse:</strong> La valeur litigieuse en 2ème/3ème instance est supérieure à celle de la 1ère instance. C'est inhabituel - la valeur ne peut que diminuer si seule une partie du jugement est contestée.
+            </div>
         </section>
 
         <!-- CRITERES D'EVALUATION -->
@@ -1236,6 +1240,13 @@
             // Avertissement valeur litigieuse
             const streitwert = parseFloat(document.getElementById('streitwert1').value) || 0;
             document.getElementById('streitwert-warning').classList.toggle('visible', streitwert > 100000);
+
+            // Validation valeur litigieuse: 2ème/3ème instance ne devrait pas > 1ère instance
+            const sw1 = parseFloat(document.getElementById('streitwert1').value) || 0;
+            const sw2 = parseFloat(document.getElementById('streitwert2').value) || 0;
+            const sw3 = parseFloat(document.getElementById('streitwert3').value) || 0;
+            const streitwertInvalid = (sw2 > sw1 && r.instanz2.aktiv) || (sw3 > sw1 && r.instanz3.aktiv);
+            document.getElementById('streitwert-instanz-warning').classList.toggle('visible', streitwertInvalid);
 
             // Timeline
             document.getElementById('tl-ag').textContent = fmtShort(r.aussergerichtlich.total);

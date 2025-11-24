@@ -56,9 +56,13 @@ const CAPPdfExport = {
         doc.setFontSize(10);
         const kantonName = result.kantonName[lang] || result.kantonName.de;
 
+        // Rechtsgebiet-Text ermitteln
+        const rechtsgebietText = this.getRechtsgebietText(params.rechtsgebiet, lang);
+
         const baseDataLines = [
             [texts.canton, kantonName],
             [texts.procedure, params.verfahrensart === 'summarisch' ? texts.summary : texts.ordinary],
+            [texts.legalArea, rechtsgebietText],
             [texts.disputeValue + ' 1', fmt(params.streitwert1)],
             [texts.utilizationRate, result.ausschoepfung + '%'],
             [texts.successProspects, this.getErfolgsText(params.erfolgsaussichten, lang)]
@@ -92,7 +96,7 @@ const CAPPdfExport = {
 
         // === 1. INSTANZ ===
         if (result.instanz1.aktiv && result.instanz1.total > 0) {
-            y = this.checkPageBreak(doc, y, 60);
+            y = this.checkPageBreak(doc, y, 80);
             y = this.addSectionHeader(doc, texts.instance1, y, primaryColor);
 
             // Gerichtskosten mit Faktor-Hinweis (50% bei Optimistisch)
@@ -100,9 +104,15 @@ const CAPPdfExport = {
                 ? fmt(result.instanz1.gerichtskostenEffektiv) + ' (50%)'
                 : fmt(result.instanz1.gerichtskostenEffektiv);
 
+            // Gebührenrahmen formatieren
+            const gk1Range = fmt(result.instanz1.gerichtskosten.min) + ' - ' + fmt(result.instanz1.gerichtskosten.max);
+            const ah1Range = fmt(result.instanz1.anwaltshonorar.min) + ' - ' + fmt(result.instanz1.anwaltshonorar.max);
+
             const i1Lines = [
                 [texts.courtCosts, gk1Label],
-                [texts.attorneyFeeTariff, fmt(result.instanz1.anwaltshonorar.berechnet)]
+                [texts.courtCostsRange, gk1Range],
+                [texts.attorneyFeeTariff, fmt(result.instanz1.anwaltshonorar.berechnet)],
+                [texts.attorneyRange, ah1Range]
             ];
 
             if (result.instanz1.honorarVereinbarung > 0) {
@@ -121,7 +131,7 @@ const CAPPdfExport = {
 
         // === 2. INSTANZ ===
         if (result.instanz2.aktiv && result.instanz2.total > 0) {
-            y = this.checkPageBreak(doc, y, 50);
+            y = this.checkPageBreak(doc, y, 70);
             y = this.addSectionHeader(doc, texts.instance2, y, primaryColor);
 
             // Gerichtskosten mit Faktor-Hinweis (50% bei Optimistisch)
@@ -129,9 +139,15 @@ const CAPPdfExport = {
                 ? fmt(result.instanz2.gerichtskostenEffektiv) + ' (50%)'
                 : fmt(result.instanz2.gerichtskostenEffektiv);
 
+            // Gebührenrahmen formatieren
+            const gk2Range = fmt(result.instanz2.gerichtskosten.min) + ' - ' + fmt(result.instanz2.gerichtskosten.max);
+            const ah2Range = fmt(result.instanz2.anwaltshonorar.min) + ' - ' + fmt(result.instanz2.anwaltshonorar.max);
+
             const i2Lines = [
                 [texts.courtCosts, gk2Label],
+                [texts.courtCostsRange, gk2Range],
                 [texts.attorneyFees, fmt(result.instanz2.anwaltshonorar.berechnet)],
+                [texts.attorneyRange, ah2Range],
                 [texts.expensesVat, fmt(result.instanz2.spesen + result.instanz2.mwst)],
                 [texts.partyCompensation, fmt(result.instanz2.pke)]
             ];
@@ -143,7 +159,7 @@ const CAPPdfExport = {
 
         // === 3. INSTANZ ===
         if (result.instanz3.aktiv && result.instanz3.total > 0) {
-            y = this.checkPageBreak(doc, y, 50);
+            y = this.checkPageBreak(doc, y, 70);
             y = this.addSectionHeader(doc, texts.instance3, y, primaryColor);
 
             // Gerichtskosten mit Faktor-Hinweis (50% bei Optimistisch)
@@ -151,9 +167,15 @@ const CAPPdfExport = {
                 ? fmt(result.instanz3.gerichtskostenEffektiv) + ' (50%)'
                 : fmt(result.instanz3.gerichtskostenEffektiv);
 
+            // Gebührenrahmen formatieren
+            const gk3Range = fmt(result.instanz3.gerichtskosten.min) + ' - ' + fmt(result.instanz3.gerichtskosten.max);
+            const ah3Range = fmt(result.instanz3.anwaltshonorar.min) + ' - ' + fmt(result.instanz3.anwaltshonorar.max);
+
             const i3Lines = [
                 [texts.courtCosts, gk3Label],
+                [texts.courtCostsRange, gk3Range],
                 [texts.attorneyFees, fmt(result.instanz3.anwaltshonorar.berechnet)],
+                [texts.attorneyRange, ah3Range],
                 [texts.expensesVat, fmt(result.instanz3.spesen + result.instanz3.mwst)],
                 [texts.partyCompensation, fmt(result.instanz3.pke)]
             ];
@@ -298,6 +320,35 @@ const CAPPdfExport = {
     },
 
     /**
+     * Rechtsgebiet Text (Art. 114 ZPO)
+     */
+    getRechtsgebietText(wert, lang) {
+        const texts = {
+            de: {
+                standard: 'Standard',
+                arbeitsrecht: 'Arbeitsrecht (Art. 114 ZPO)',
+                mietrecht: 'Mietrecht (Art. 114 ZPO)',
+                gleichstellung: 'Gleichstellungsgesetz (Art. 114 ZPO)',
+                behinderten: 'Behindertengleichstellung (Art. 114 ZPO)',
+                mitwirkung: 'Mitwirkungsgesetz (Art. 114 ZPO)',
+                zusatzversicherung: 'Zusatzversicherung KVG (Art. 114 ZPO)',
+                datenschutz: 'Datenschutzgesetz (Art. 114 ZPO)'
+            },
+            fr: {
+                standard: 'Standard',
+                arbeitsrecht: 'Droit du travail (art. 114 CPC)',
+                mietrecht: 'Droit du bail (art. 114 CPC)',
+                gleichstellung: 'Loi sur l\'égalité (art. 114 CPC)',
+                behinderten: 'Égalité handicapés (art. 114 CPC)',
+                mitwirkung: 'Loi sur la participation (art. 114 CPC)',
+                zusatzversicherung: 'Assurance compl. (art. 114 CPC)',
+                datenschutz: 'Protection des données (art. 114 CPC)'
+            }
+        };
+        return texts[lang]?.[wert] || texts.de[wert] || wert || 'Standard';
+    },
+
+    /**
      * Texte für PDF
      */
     getTexts(lang) {
@@ -312,9 +363,12 @@ const CAPPdfExport = {
                 procedure: 'Type de procédure',
                 ordinary: 'Procédure ordinaire/simplifiée',
                 summary: 'Procédure sommaire',
+                legalArea: 'Domaine juridique',
+                legalAreaStandard: 'Standard',
                 disputeValue: 'Valeur litigieuse',
                 utilizationRate: 'Utilisation du barème',
                 successProspects: 'Chances de succès',
+                feeRange: 'Fourchette des frais',
                 extrajudicial: 'Phase extrajudiciaire',
                 attorneyFees: 'Honoraires d\'avocat',
                 attorneyFeeTariff: 'Honoraires (tarif)',
@@ -329,6 +383,8 @@ const CAPPdfExport = {
                 instance2: '2ème instance - Appel',
                 instance3: '3ème instance - Tribunal fédéral',
                 courtCosts: 'Frais judiciaires',
+                courtCostsRange: 'Frais jud. (fourchette)',
+                attorneyRange: 'Honoraires (fourchette)',
                 partyCompensation: 'Dépens (en cas de perte)',
                 subtotal: 'Sous-total',
                 grandTotal: 'FRAIS TOTAUX (estimation)',
@@ -347,9 +403,12 @@ const CAPPdfExport = {
             procedure: 'Verfahrensart',
             ordinary: 'Ordentliches/Vereinfachtes Verfahren',
             summary: 'Summarisches Verfahren',
+            legalArea: 'Rechtsgebiet',
+            legalAreaStandard: 'Standard',
             disputeValue: 'Streitwert',
             utilizationRate: 'Ausschöpfung',
             successProspects: 'Erfolgsaussichten',
+            feeRange: 'Gebührenrahmen',
             extrajudicial: 'Aussergerichtliche Phase',
             attorneyFees: 'Anwaltshonorar',
             attorneyFeeTariff: 'Anwaltshonorar (PKV)',
@@ -362,6 +421,8 @@ const CAPPdfExport = {
             enforcement: 'Betreibung/RÖ',
             instance1: '1. Instanz - Gerichtliches Verfahren',
             instance2: '2. Instanz - Berufung',
+            courtCostsRange: 'Gerichtskosten (Rahmen)',
+            attorneyRange: 'Anwaltshonorar (Rahmen)',
             instance3: '3. Instanz - Bundesgericht',
             courtCosts: 'Gerichtskosten',
             partyCompensation: 'PKE (bei Verlust)',

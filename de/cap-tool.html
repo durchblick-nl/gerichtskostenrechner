@@ -761,7 +761,7 @@
                 </div>
                 <div class="form-group">
                     <label for="streitwert2"><span data-tooltip="Kann abweichen, wenn nur Teile des Urteils angefochten werden">Streitwert 2. Instanz (CHF)</span></label>
-                    <input type="number" id="streitwert2" value="50000" min="0" step="1000">
+                    <input type="number" id="streitwert2" value="50000" min="0" step="1000" tabindex="5">
                 </div>
                 <div class="form-group">
                     <label for="streitwert3"><span data-tooltip="Bundesgericht: Streitwert mind. CHF 15'000 für Beschwerde in Zivilsachen">Streitwert 3. Instanz (CHF)</span></label>
@@ -771,6 +771,10 @@
 
             <div class="warning-box" id="streitwert-warning">
                 <strong>Hinweis Art. 199 ZPO:</strong> Bei Streitwert über CHF 100'000 können die Parteien auf das Schlichtungsverfahren verzichten (Opt-out). Dies kann Zeit und Kosten sparen.
+            </div>
+
+            <div class="warning-box" id="streitwert-instanz-warning">
+                <strong>Hinweis Streitwert:</strong> Der Streitwert in der 2./3. Instanz ist höher als in der 1. Instanz. Dies ist ungewöhnlich - der Streitwert kann nur sinken, wenn nicht das gesamte Urteil angefochten wird.
             </div>
         </section>
 
@@ -1365,6 +1369,13 @@
             // Streitwert-Warnung
             const streitwert = parseFloat(document.getElementById('streitwert1').value) || 0;
             document.getElementById('streitwert-warning').classList.toggle('visible', streitwert > 100000);
+
+            // Streitwert-Validierung: 2./3. Instanz sollte nicht > 1. Instanz sein
+            const sw1 = parseFloat(document.getElementById('streitwert1').value) || 0;
+            const sw2 = parseFloat(document.getElementById('streitwert2').value) || 0;
+            const sw3 = parseFloat(document.getElementById('streitwert3').value) || 0;
+            const streitwertInvalid = (sw2 > sw1 && r.instanz2.aktiv) || (sw3 > sw1 && r.instanz3.aktiv);
+            document.getElementById('streitwert-instanz-warning').classList.toggle('visible', streitwertInvalid);
 
             // Timeline
             document.getElementById('tl-ag').textContent = fmtShort(r.aussergerichtlich.total);
