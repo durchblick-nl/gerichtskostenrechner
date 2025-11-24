@@ -417,10 +417,235 @@
             color: white;
         }
 
+        /* Tooltips */
+        [data-tooltip] {
+            position: relative;
+            cursor: help;
+            border-bottom: 1px dotted #999;
+        }
+
+        [data-tooltip]:hover::after {
+            content: attr(data-tooltip);
+            position: absolute;
+            bottom: 100%;
+            left: 0;
+            background: #333;
+            color: white;
+            padding: 8px 12px;
+            border-radius: 6px;
+            font-size: 0.8rem;
+            font-weight: normal;
+            white-space: nowrap;
+            max-width: 300px;
+            white-space: normal;
+            z-index: 100;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.2);
+        }
+
+        /* Gebührenrahmen */
+        .fee-range {
+            font-size: 0.75rem;
+            color: #888;
+            margin-top: 2px;
+        }
+
+        /* Warning Box */
+        .warning-box {
+            background: #fff3cd;
+            border-left: 4px solid var(--warning);
+            padding: 12px 15px;
+            border-radius: 0 8px 8px 0;
+            margin: 15px 0;
+            font-size: 0.9rem;
+            display: none;
+        }
+
+        .warning-box.visible {
+            display: block;
+        }
+
+        /* Summary Box */
+        .summary-box {
+            background: linear-gradient(135deg, #e8f4f8 0%, #d4e8ed 100%);
+            border: 1px solid var(--primary-light);
+            padding: 20px;
+            border-radius: 10px;
+            margin-top: 20px;
+            font-size: 0.95rem;
+            line-height: 1.6;
+        }
+
+        /* Scenario Comparison */
+        .scenario-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 15px;
+            margin-top: 20px;
+        }
+
+        .scenario-card {
+            background: white;
+            padding: 15px;
+            border-radius: 10px;
+            text-align: center;
+            box-shadow: 0 2px 6px rgba(0,0,0,0.08);
+        }
+
+        .scenario-card.best {
+            border-top: 3px solid var(--success);
+        }
+
+        .scenario-card.likely {
+            border-top: 3px solid var(--warning);
+        }
+
+        .scenario-card.worst {
+            border-top: 3px solid var(--accent);
+        }
+
+        .scenario-card h5 {
+            margin: 0 0 10px 0;
+            font-size: 0.85rem;
+            color: #666;
+        }
+
+        .scenario-amount {
+            font-size: 1.3rem;
+            font-weight: bold;
+            font-family: 'Courier New', monospace;
+        }
+
+        /* Cost Visualization */
+        .cost-bars {
+            margin-top: 20px;
+        }
+
+        .cost-bar-row {
+            display: flex;
+            align-items: center;
+            margin-bottom: 12px;
+        }
+
+        .cost-bar-label {
+            width: 120px;
+            font-size: 0.85rem;
+            color: #666;
+        }
+
+        .cost-bar-container {
+            flex: 1;
+            height: 24px;
+            background: #e9ecef;
+            border-radius: 4px;
+            overflow: hidden;
+            position: relative;
+        }
+
+        .cost-bar-fill {
+            height: 100%;
+            border-radius: 4px;
+            transition: width 0.5s ease;
+        }
+
+        .cost-bar-fill.gerichtskosten {
+            background: var(--primary);
+        }
+
+        .cost-bar-fill.anwaltskosten {
+            background: var(--primary-light);
+        }
+
+        .cost-bar-fill.pke {
+            background: var(--accent);
+        }
+
+        .cost-bar-value {
+            position: absolute;
+            right: 8px;
+            top: 50%;
+            transform: translateY(-50%);
+            font-size: 0.75rem;
+            font-weight: 500;
+        }
+
+        /* Timeline */
+        .timeline {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            margin: 30px 0;
+            position: relative;
+        }
+
+        .timeline::before {
+            content: '';
+            position: absolute;
+            top: 20px;
+            left: 10%;
+            right: 10%;
+            height: 3px;
+            background: linear-gradient(90deg, var(--primary) 0%, var(--primary-light) 50%, var(--accent) 100%);
+            z-index: 0;
+        }
+
+        .timeline-point {
+            text-align: center;
+            z-index: 1;
+            flex: 1;
+        }
+
+        .timeline-dot {
+            width: 40px;
+            height: 40px;
+            background: var(--primary);
+            border-radius: 50%;
+            margin: 0 auto 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-weight: bold;
+            font-size: 0.9rem;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.15);
+        }
+
+        .timeline-dot.inactive {
+            background: #ccc;
+        }
+
+        .timeline-label {
+            font-size: 0.8rem;
+            color: #666;
+            margin-bottom: 5px;
+        }
+
+        .timeline-amount {
+            font-weight: bold;
+            font-family: 'Courier New', monospace;
+            font-size: 0.9rem;
+        }
+
+        .timeline-cumulative {
+            font-size: 0.75rem;
+            color: #888;
+            margin-top: 3px;
+        }
+
         @media print {
             .no-print { display: none !important; }
-            .section { break-inside: avoid; }
-            body { font-size: 11pt; }
+            .section { break-inside: avoid; page-break-inside: avoid; }
+            body { font-size: 10pt; }
+            .cap-container { max-width: 100%; padding: 0; }
+            .cap-header { background: var(--primary) !important; -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+            .results-section { border: 1px solid #333; }
+            .result-card { box-shadow: none; border: 1px solid #ddd; }
+            .total-box { background: var(--primary) !important; -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+            .scenario-card { border: 1px solid #ddd; }
+            .timeline-dot { -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+            .cost-bar-fill { -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+            .summary-box { background: #f5f5f5 !important; border: 1px solid #ccc; }
+            h1, h2, h3 { page-break-after: avoid; }
+            @page { margin: 1.5cm; }
         }
 
         @media (max-width: 768px) {
@@ -497,20 +722,24 @@
 
             <div class="form-grid">
                 <div class="form-group">
-                    <label for="streitwert1">Streitwert 1. Instanz (CHF)</label>
+                    <label for="streitwert1"><span data-tooltip="Wert der eingeklagten Forderung oder des Streitgegenstandes">Streitwert 1. Instanz (CHF)</span></label>
                     <div style="display: flex; gap: 8px;">
                         <input type="number" id="streitwert1" value="50000" min="0" step="1000" style="flex: 1;">
                         <button type="button" class="btn-small" onclick="syncStreitwert()" title="Streitwert für alle Instanzen übernehmen">&#x21BB; Sync</button>
                     </div>
                 </div>
                 <div class="form-group">
-                    <label for="streitwert2">Streitwert 2. Instanz (CHF)</label>
+                    <label for="streitwert2"><span data-tooltip="Kann abweichen, wenn nur Teile des Urteils angefochten werden">Streitwert 2. Instanz (CHF)</span></label>
                     <input type="number" id="streitwert2" value="50000" min="0" step="1000">
                 </div>
                 <div class="form-group">
-                    <label for="streitwert3">Streitwert 3. Instanz (CHF)</label>
+                    <label for="streitwert3"><span data-tooltip="Bundesgericht: Streitwert mind. CHF 15'000 für Beschwerde in Zivilsachen">Streitwert 3. Instanz (CHF)</span></label>
                     <input type="number" id="streitwert3" value="50000" min="0" step="1000">
                 </div>
+            </div>
+
+            <div class="warning-box" id="streitwert-warning">
+                <strong>Hinweis Art. 199 ZPO:</strong> Bei Streitwert über CHF 100'000 können die Parteien auf das Schlichtungsverfahren verzichten (Opt-out). Dies kann Zeit und Kosten sparen.
             </div>
         </section>
 
@@ -797,9 +1026,88 @@
                 </div>
             </div>
 
+            <!-- Timeline Visualisierung -->
+            <div class="timeline" id="cost-timeline">
+                <div class="timeline-point">
+                    <div class="timeline-dot" id="tl-dot-ag">AG</div>
+                    <div class="timeline-label">Aussergerichtlich</div>
+                    <div class="timeline-amount" id="tl-ag">CHF 0</div>
+                    <div class="timeline-cumulative" id="tl-ag-cum">Kumuliert: CHF 0</div>
+                </div>
+                <div class="timeline-point">
+                    <div class="timeline-dot" id="tl-dot-i1">1</div>
+                    <div class="timeline-label">1. Instanz</div>
+                    <div class="timeline-amount" id="tl-i1">CHF 0</div>
+                    <div class="timeline-cumulative" id="tl-i1-cum">Kumuliert: CHF 0</div>
+                </div>
+                <div class="timeline-point">
+                    <div class="timeline-dot inactive" id="tl-dot-i2">2</div>
+                    <div class="timeline-label">2. Instanz</div>
+                    <div class="timeline-amount" id="tl-i2">-</div>
+                    <div class="timeline-cumulative" id="tl-i2-cum"></div>
+                </div>
+                <div class="timeline-point">
+                    <div class="timeline-dot inactive" id="tl-dot-i3">3</div>
+                    <div class="timeline-label">Bundesgericht</div>
+                    <div class="timeline-amount" id="tl-i3">-</div>
+                    <div class="timeline-cumulative" id="tl-i3-cum"></div>
+                </div>
+            </div>
+
+            <!-- Szenario-Vergleich -->
+            <h4 style="margin: 25px 0 10px; color: var(--primary);">Szenario-Vergleich</h4>
+            <div class="scenario-grid">
+                <div class="scenario-card best">
+                    <h5>Best Case (Gewinn)</h5>
+                    <div class="scenario-amount" id="scenario-best">CHF 0</div>
+                    <div class="fee-range">Nur eigene Kosten</div>
+                </div>
+                <div class="scenario-card likely">
+                    <h5>Wahrscheinlich (Vergleich)</h5>
+                    <div class="scenario-amount" id="scenario-likely">CHF 0</div>
+                    <div class="fee-range">50% Kosten geteilt</div>
+                </div>
+                <div class="scenario-card worst">
+                    <h5>Worst Case (Verlust)</h5>
+                    <div class="scenario-amount" id="scenario-worst">CHF 0</div>
+                    <div class="fee-range">Inkl. Gegenpartei</div>
+                </div>
+            </div>
+
+            <!-- Kostenaufschlüsselung Balken -->
+            <h4 style="margin: 25px 0 10px; color: var(--primary);">Kostenaufschlüsselung</h4>
+            <div class="cost-bars">
+                <div class="cost-bar-row">
+                    <span class="cost-bar-label">Gerichtskosten</span>
+                    <div class="cost-bar-container">
+                        <div class="cost-bar-fill gerichtskosten" id="bar-gericht" style="width: 0%"></div>
+                        <span class="cost-bar-value" id="bar-gericht-val">CHF 0</span>
+                    </div>
+                </div>
+                <div class="cost-bar-row">
+                    <span class="cost-bar-label">Anwaltskosten</span>
+                    <div class="cost-bar-container">
+                        <div class="cost-bar-fill anwaltskosten" id="bar-anwalt" style="width: 0%"></div>
+                        <span class="cost-bar-value" id="bar-anwalt-val">CHF 0</span>
+                    </div>
+                </div>
+                <div class="cost-bar-row">
+                    <span class="cost-bar-label">PKE (Verlust)</span>
+                    <div class="cost-bar-container">
+                        <div class="cost-bar-fill pke" id="bar-pke" style="width: 0%"></div>
+                        <span class="cost-bar-value" id="bar-pke-val">CHF 0</span>
+                    </div>
+                </div>
+            </div>
+
             <div class="total-box">
                 <h3>Gesamtaufwand (voraussichtlich)</h3>
                 <div class="total-amount" id="r-gesamt">CHF 0.00</div>
+            </div>
+
+            <!-- Zusammenfassung -->
+            <div class="summary-box" id="summary-box">
+                <strong>Zusammenfassung:</strong> <span id="summary-text">Ihre Berechnung wird hier zusammengefasst.</span>
             </div>
 
             <div class="action-buttons no-print">
@@ -835,8 +1143,13 @@
     <script>
         // Initialisierung
         document.addEventListener('DOMContentLoaded', function() {
-            // Datum auf heute setzen
-            document.getElementById('datum').valueAsDate = new Date();
+            // Zuerst gespeicherte Daten laden
+            loadFromStorage();
+
+            // Datum auf heute setzen falls leer
+            if (!document.getElementById('datum').value) {
+                document.getElementById('datum').valueAsDate = new Date();
+            }
 
             // Event Listeners
             const inputs = document.querySelectorAll('input, select');
@@ -930,6 +1243,7 @@
 
         function zeigeErgebnisse(r) {
             const fmt = CAPCalculator.formatCHF;
+            const fmtShort = (v) => 'CHF ' + Math.round(v).toLocaleString('de-CH');
 
             // Aussergerichtlich
             document.getElementById('r-ag-honorar').textContent = fmt(r.aussergerichtlich.honorarAnwalt);
@@ -963,6 +1277,78 @@
             // Result cards visibility
             document.getElementById('result-instanz2').classList.toggle('hidden', !r.instanz2.aktiv);
             document.getElementById('result-instanz3').classList.toggle('hidden', !r.instanz3.aktiv);
+
+            // === NEUE VISUALISIERUNGEN ===
+
+            // Streitwert-Warnung
+            const streitwert = parseFloat(document.getElementById('streitwert1').value) || 0;
+            document.getElementById('streitwert-warning').classList.toggle('visible', streitwert > 100000);
+
+            // Timeline
+            document.getElementById('tl-ag').textContent = fmtShort(r.aussergerichtlich.total);
+            document.getElementById('tl-ag-cum').textContent = 'Kumuliert: ' + fmtShort(r.gesamtAussergerichtlich);
+            document.getElementById('tl-i1').textContent = fmtShort(r.instanz1.total);
+            document.getElementById('tl-i1-cum').textContent = 'Kumuliert: ' + fmtShort(r.gesamtInstanz1);
+
+            if (r.instanz2.aktiv) {
+                document.getElementById('tl-dot-i2').classList.remove('inactive');
+                document.getElementById('tl-i2').textContent = fmtShort(r.instanz2.total);
+                document.getElementById('tl-i2-cum').textContent = 'Kumuliert: ' + fmtShort(r.gesamtInstanz2);
+            } else {
+                document.getElementById('tl-dot-i2').classList.add('inactive');
+                document.getElementById('tl-i2').textContent = '-';
+                document.getElementById('tl-i2-cum').textContent = '';
+            }
+
+            if (r.instanz3.aktiv) {
+                document.getElementById('tl-dot-i3').classList.remove('inactive');
+                document.getElementById('tl-i3').textContent = fmtShort(r.instanz3.total);
+                document.getElementById('tl-i3-cum').textContent = 'Kumuliert: ' + fmtShort(r.gesamtInstanz3);
+            } else {
+                document.getElementById('tl-dot-i3').classList.add('inactive');
+                document.getElementById('tl-i3').textContent = '-';
+                document.getElementById('tl-i3-cum').textContent = '';
+            }
+
+            // Szenarien berechnen
+            const totalPKE = r.instanz1.pke + r.instanz2.pke + r.instanz3.pke;
+            const totalGericht = r.instanz1.gerichtskosten.berechnet + r.instanz2.gerichtskosten.berechnet + r.instanz3.gerichtskosten.berechnet;
+            const totalAnwalt = r.aussergerichtlich.honorarAnwalt + r.aussergerichtlich.spesen + r.aussergerichtlich.mwst +
+                              r.instanz1.anwaltshonorar.berechnet + r.instanz1.spesen + r.instanz1.mwst +
+                              r.instanz2.anwaltshonorar.berechnet + r.instanz2.spesen + r.instanz2.mwst +
+                              r.instanz3.anwaltshonorar.berechnet + r.instanz3.spesen + r.instanz3.mwst;
+
+            const bestCase = totalAnwalt + r.aussergerichtlich.schlichtung + r.aussergerichtlich.expertisen;
+            const worstCase = r.gesamtTotal;
+            const likelyCase = Math.round((bestCase + worstCase) / 2);
+
+            document.getElementById('scenario-best').textContent = fmtShort(bestCase);
+            document.getElementById('scenario-likely').textContent = fmtShort(likelyCase);
+            document.getElementById('scenario-worst').textContent = fmtShort(worstCase);
+
+            // Kostenbalken
+            const maxCost = Math.max(totalGericht, totalAnwalt, totalPKE, 1);
+            document.getElementById('bar-gericht').style.width = (totalGericht / maxCost * 80) + '%';
+            document.getElementById('bar-gericht-val').textContent = fmtShort(totalGericht);
+            document.getElementById('bar-anwalt').style.width = (totalAnwalt / maxCost * 80) + '%';
+            document.getElementById('bar-anwalt-val').textContent = fmtShort(totalAnwalt);
+            document.getElementById('bar-pke').style.width = (totalPKE / maxCost * 80) + '%';
+            document.getElementById('bar-pke-val').textContent = fmtShort(totalPKE);
+
+            // Zusammenfassung generieren
+            const kantonName = r.kantonName.de;
+            const verfahren = document.getElementById('verfahrensart').value === 'summarisch' ? 'summarisches' : 'ordentliches';
+            let instanzen = '1. Instanz';
+            if (r.instanz2.aktiv && r.instanz3.aktiv) instanzen = 'alle drei Instanzen';
+            else if (r.instanz2.aktiv) instanzen = '1. und 2. Instanz';
+
+            const summary = `Für ein ${verfahren} Verfahren im Kanton ${kantonName} mit einem Streitwert von ${fmtShort(streitwert)} ` +
+                          `betragen die voraussichtlichen Kosten für ${instanzen} insgesamt <strong>${fmt(r.gesamtTotal)}</strong>. ` +
+                          `Bei einem Vergleich (50/50) wären es ca. ${fmtShort(likelyCase)}, bei vollständigem Obsiegen nur ${fmtShort(bestCase)}.`;
+            document.getElementById('summary-text').innerHTML = summary;
+
+            // In LocalStorage speichern
+            saveToStorage();
         }
 
         function exportPDF() {
@@ -1060,6 +1446,92 @@
             document.getElementById('stunden-anwalt').value = hours;
             document.getElementById('stunden-help').textContent = description + ' (Richtwert)';
             berechneUndZeige();
+        }
+
+        // === LOCAL STORAGE ===
+        const STORAGE_KEY = 'cap_tool_data_de';
+
+        function saveToStorage() {
+            const data = {
+                fallnummer: document.getElementById('fallnummer').value,
+                datum: document.getElementById('datum').value,
+                kanton: document.getElementById('kanton').value,
+                verfahrensart: document.getElementById('verfahrensart').value,
+                streitwert1: document.getElementById('streitwert1').value,
+                streitwert2: document.getElementById('streitwert2').value,
+                streitwert3: document.getElementById('streitwert3').value,
+                zeitaufwand: document.getElementById('zeitaufwand').value,
+                bedeutung: document.getElementById('bedeutung').value,
+                schwierigkeit: document.getElementById('schwierigkeit').value,
+                erfolgsaussichten: document.getElementById('erfolgsaussichten').value,
+                stundenAnwalt: document.getElementById('stunden-anwalt').value,
+                stundenansatz: document.getElementById('stundenansatz').value,
+                expertisen: document.getElementById('expertisen').value,
+                betreibung: document.getElementById('betreibung').value,
+                honorarVereinbarung: document.getElementById('honorar-vereinbarung').value,
+                schlichtungAktiv: document.getElementById('schlichtung-aktiv').checked,
+                aussergerichtlichAktiv: document.getElementById('aussergerichtlich-aktiv').checked,
+                instanz1Aktiv: document.getElementById('instanz1-aktiv').checked,
+                instanz2Aktiv: document.getElementById('instanz2-aktiv').checked,
+                instanz3Aktiv: document.getElementById('instanz3-aktiv').checked,
+                savedAt: new Date().toISOString()
+            };
+            try {
+                localStorage.setItem(STORAGE_KEY, JSON.stringify(data));
+            } catch (e) {
+                console.warn('LocalStorage nicht verfügbar:', e);
+            }
+        }
+
+        function loadFromStorage() {
+            try {
+                const saved = localStorage.getItem(STORAGE_KEY);
+                if (!saved) return;
+
+                const data = JSON.parse(saved);
+
+                // Nur laden wenn nicht älter als 7 Tage
+                const savedAt = new Date(data.savedAt);
+                const daysDiff = (new Date() - savedAt) / (1000 * 60 * 60 * 24);
+                if (daysDiff > 7) {
+                    localStorage.removeItem(STORAGE_KEY);
+                    return;
+                }
+
+                // Werte wiederherstellen
+                if (data.fallnummer) document.getElementById('fallnummer').value = data.fallnummer;
+                if (data.datum) document.getElementById('datum').value = data.datum;
+                if (data.kanton) document.getElementById('kanton').value = data.kanton;
+                if (data.verfahrensart) document.getElementById('verfahrensart').value = data.verfahrensart;
+                if (data.streitwert1) document.getElementById('streitwert1').value = data.streitwert1;
+                if (data.streitwert2) document.getElementById('streitwert2').value = data.streitwert2;
+                if (data.streitwert3) document.getElementById('streitwert3').value = data.streitwert3;
+                if (data.zeitaufwand) document.getElementById('zeitaufwand').value = data.zeitaufwand;
+                if (data.bedeutung) document.getElementById('bedeutung').value = data.bedeutung;
+                if (data.schwierigkeit) document.getElementById('schwierigkeit').value = data.schwierigkeit;
+                if (data.erfolgsaussichten) document.getElementById('erfolgsaussichten').value = data.erfolgsaussichten;
+                if (data.stundenAnwalt) document.getElementById('stunden-anwalt').value = data.stundenAnwalt;
+                if (data.stundenansatz) document.getElementById('stundenansatz').value = data.stundenansatz;
+                if (data.expertisen) document.getElementById('expertisen').value = data.expertisen;
+                if (data.betreibung) document.getElementById('betreibung').value = data.betreibung;
+                if (data.honorarVereinbarung) document.getElementById('honorar-vereinbarung').value = data.honorarVereinbarung;
+
+                // Checkboxen
+                document.getElementById('schlichtung-aktiv').checked = data.schlichtungAktiv !== false;
+                document.getElementById('aussergerichtlich-aktiv').checked = data.aussergerichtlichAktiv !== false;
+                document.getElementById('instanz1-aktiv').checked = data.instanz1Aktiv !== false;
+                document.getElementById('instanz2-aktiv').checked = data.instanz2Aktiv === true;
+                document.getElementById('instanz3-aktiv').checked = data.instanz3Aktiv === true;
+
+                // UI aktualisieren
+                if (!data.aussergerichtlichAktiv) document.getElementById('aussergerichtlich-content').classList.add('collapsed');
+                if (!data.instanz1Aktiv) document.getElementById('instanz1-content').classList.add('collapsed');
+                if (data.instanz2Aktiv) document.getElementById('instanz2-content').classList.remove('collapsed');
+                if (data.instanz3Aktiv) document.getElementById('instanz3-content').classList.remove('collapsed');
+
+            } catch (e) {
+                console.warn('Fehler beim Laden:', e);
+            }
         }
     </script>
 </body>
