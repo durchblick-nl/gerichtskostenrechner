@@ -390,6 +390,33 @@
             color: #666;
         }
 
+        .btn-small {
+            padding: 8px 12px;
+            background: var(--primary);
+            color: white;
+            border: none;
+            border-radius: 6px;
+            font-size: 0.85rem;
+            cursor: pointer;
+            white-space: nowrap;
+            transition: background 0.2s;
+        }
+
+        .btn-small:hover {
+            background: var(--primary-light);
+        }
+
+        .btn-estimate {
+            background: var(--bg-light);
+            color: var(--primary);
+            border: 1px solid var(--border);
+        }
+
+        .btn-estimate:hover {
+            background: var(--primary);
+            color: white;
+        }
+
         @media print {
             .no-print { display: none !important; }
             .section { break-inside: avoid; }
@@ -465,13 +492,16 @@
             </div>
 
             <div class="info-box">
-                <strong>Streitwert:</strong> Der Streitwert bestimmt die Höhe der Gerichts- und Anwaltskosten. Bei mehreren Instanzen kann der Streitwert variieren.
+                <strong>Streitwert:</strong> Der Streitwert bestimmt die Höhe der Gerichts- und Anwaltskosten. Er entspricht dem Wert des Streitgegenstandes (z.B. eingeklagte Forderung). Bei Berufung/Beschwerde kann sich der Streitwert ändern, wenn nur Teile des Urteils angefochten werden.
             </div>
 
             <div class="form-grid">
                 <div class="form-group">
                     <label for="streitwert1">Streitwert 1. Instanz (CHF)</label>
-                    <input type="number" id="streitwert1" value="50000" min="0" step="1000">
+                    <div style="display: flex; gap: 8px;">
+                        <input type="number" id="streitwert1" value="50000" min="0" step="1000" style="flex: 1;">
+                        <button type="button" class="btn-small" onclick="syncStreitwert()" title="Streitwert für alle Instanzen übernehmen">&#x21BB; Sync</button>
+                    </div>
                 </div>
                 <div class="form-group">
                     <label for="streitwert2">Streitwert 2. Instanz (CHF)</label>
@@ -557,22 +587,33 @@
             </div>
 
             <div id="aussergerichtlich-content" class="section-content">
+                <div class="info-box">
+                    <strong>Aussergerichtliche Phase:</strong> Hierzu gehören Korrespondenz, Verhandlungen, Mahnungen und Vergleichsgespräche vor Einreichung einer Klage. Diese Phase kann oft einen Rechtsstreit vermeiden.
+                </div>
+
                 <div class="form-grid">
                     <div class="form-group">
                         <label for="stunden-anwalt">Anzahl Stunden Anwalt</label>
-                        <input type="number" id="stunden-anwalt" value="15" min="0">
+                        <div style="display: flex; gap: 8px;">
+                            <input type="number" id="stunden-anwalt" value="0" min="0" style="flex: 1;">
+                            <button type="button" class="btn-small btn-estimate" onclick="estimateHours()" title="Schätzung basierend auf Streitwert">Schätzung</button>
+                        </div>
+                        <span class="help-text" id="stunden-help">Klicken Sie auf "Schätzung" für einen Richtwert</span>
                     </div>
                     <div class="form-group">
                         <label for="stundenansatz">Stundenansatz (CHF)</label>
                         <input type="number" id="stundenansatz" value="250" min="0">
+                        <span class="help-text">Üblich: CHF 200-400/h je nach Erfahrung</span>
                     </div>
                     <div class="form-group">
                         <label for="expertisen">Expertisen (CHF)</label>
                         <input type="number" id="expertisen" value="0" min="0">
+                        <span class="help-text">Gutachten, Bewertungen, Privatgutachten</span>
                     </div>
                     <div class="form-group">
                         <label for="betreibung">Betreibungs-/Rechtsöffnungskosten (CHF)</label>
                         <input type="number" id="betreibung" value="0" min="0">
+                        <span class="help-text">Falls bereits Betreibung eingeleitet</span>
                     </div>
                 </div>
 
@@ -581,6 +622,7 @@
                         <input type="checkbox" id="schlichtung-aktiv" checked>
                         <span>Schlichtungsverfahren einbeziehen</span>
                     </label>
+                    <span class="help-text" style="margin-left: 30px;">Obligatorisch vor Zivilklage (ausser bei Streitwert > CHF 100'000 mit Opt-out)</span>
                 </div>
             </div>
         </section>
@@ -960,7 +1002,7 @@
             document.getElementById('zeitaufwand').value = 4;
             document.getElementById('bedeutung').value = 4;
             document.getElementById('schwierigkeit').value = 4;
-            document.getElementById('stunden-anwalt').value = 15;
+            document.getElementById('stunden-anwalt').value = 0;
             document.getElementById('stundenansatz').value = 250;
             document.getElementById('expertisen').value = 0;
             document.getElementById('betreibung').value = 0;
@@ -974,6 +1016,50 @@
             // Update UI
             document.getElementById('instanz2-content').classList.add('collapsed');
             document.getElementById('instanz3-content').classList.add('collapsed');
+        }
+
+        function syncStreitwert() {
+            const streitwert1 = document.getElementById('streitwert1').value;
+            document.getElementById('streitwert2').value = streitwert1;
+            document.getElementById('streitwert3').value = streitwert1;
+            berechneUndZeige();
+        }
+
+        function estimateHours() {
+            const streitwert = parseFloat(document.getElementById('streitwert1').value) || 0;
+            let hours = 0;
+            let description = '';
+
+            // Schätzung basierend auf Streitwert (für aussergerichtliche Phase)
+            if (streitwert <= 5000) {
+                hours = 3;
+                description = '~3h für kleine Fälle';
+            } else if (streitwert <= 10000) {
+                hours = 5;
+                description = '~5h für einfache Fälle';
+            } else if (streitwert <= 30000) {
+                hours = 10;
+                description = '~10h für mittlere Fälle';
+            } else if (streitwert <= 50000) {
+                hours = 15;
+                description = '~15h für grössere Fälle';
+            } else if (streitwert <= 100000) {
+                hours = 20;
+                description = '~20h für umfangreiche Fälle';
+            } else if (streitwert <= 250000) {
+                hours = 30;
+                description = '~30h für komplexe Fälle';
+            } else if (streitwert <= 500000) {
+                hours = 40;
+                description = '~40h für sehr komplexe Fälle';
+            } else {
+                hours = 60;
+                description = '~60h+ für Grossverfahren';
+            }
+
+            document.getElementById('stunden-anwalt').value = hours;
+            document.getElementById('stunden-help').textContent = description + ' (Richtwert)';
+            berechneUndZeige();
         }
     </script>
 </body>

@@ -390,6 +390,33 @@
             color: #666;
         }
 
+        .btn-small {
+            padding: 8px 12px;
+            background: var(--primary);
+            color: white;
+            border: none;
+            border-radius: 6px;
+            font-size: 0.85rem;
+            cursor: pointer;
+            white-space: nowrap;
+            transition: background 0.2s;
+        }
+
+        .btn-small:hover {
+            background: var(--primary-light);
+        }
+
+        .btn-estimate {
+            background: var(--bg-light);
+            color: var(--primary);
+            border: 1px solid var(--border);
+        }
+
+        .btn-estimate:hover {
+            background: var(--primary);
+            color: white;
+        }
+
         @media print {
             .no-print { display: none !important; }
             .section { break-inside: avoid; }
@@ -465,13 +492,16 @@
             </div>
 
             <div class="info-box">
-                <strong>Valeur litigieuse:</strong> La valeur litigieuse détermine le montant des frais judiciaires et d'avocat. En cas de plusieurs instances, la valeur litigieuse peut varier.
+                <strong>Valeur litigieuse:</strong> La valeur litigieuse détermine le montant des frais judiciaires et d'avocat. Elle correspond à la valeur de l'objet du litige (p.ex. créance réclamée). En appel, la valeur peut changer si seule une partie du jugement est contestée.
             </div>
 
             <div class="form-grid">
                 <div class="form-group">
                     <label for="streitwert1">Valeur litigieuse 1ère instance (CHF)</label>
-                    <input type="number" id="streitwert1" value="50000" min="0" step="1000">
+                    <div style="display: flex; gap: 8px;">
+                        <input type="number" id="streitwert1" value="50000" min="0" step="1000" style="flex: 1;">
+                        <button type="button" class="btn-small" onclick="syncStreitwert()" title="Appliquer à toutes les instances">&#x21BB; Sync</button>
+                    </div>
                 </div>
                 <div class="form-group">
                     <label for="streitwert2">Valeur litigieuse 2ème instance (CHF)</label>
@@ -557,22 +587,33 @@
             </div>
 
             <div id="aussergerichtlich-content" class="section-content">
+                <div class="info-box">
+                    <strong>Phase extrajudiciaire:</strong> Comprend la correspondance, les négociations, les mises en demeure et les pourparlers transactionnels avant le dépôt d'une action. Cette phase peut souvent éviter un procès.
+                </div>
+
                 <div class="form-grid">
                     <div class="form-group">
                         <label for="stunden-anwalt">Heures d'avocat</label>
-                        <input type="number" id="stunden-anwalt" value="15" min="0">
+                        <div style="display: flex; gap: 8px;">
+                            <input type="number" id="stunden-anwalt" value="0" min="0" style="flex: 1;">
+                            <button type="button" class="btn-small btn-estimate" onclick="estimateHours()" title="Estimation basée sur la valeur litigieuse">Estimation</button>
+                        </div>
+                        <span class="help-text" id="stunden-help">Cliquez sur "Estimation" pour une valeur indicative</span>
                     </div>
                     <div class="form-group">
                         <label for="stundenansatz">Tarif horaire (CHF)</label>
                         <input type="number" id="stundenansatz" value="250" min="0">
+                        <span class="help-text">Usuel: CHF 200-400/h selon l'expérience</span>
                     </div>
                     <div class="form-group">
                         <label for="expertisen">Expertises (CHF)</label>
                         <input type="number" id="expertisen" value="0" min="0">
+                        <span class="help-text">Expertises, évaluations, expertises privées</span>
                     </div>
                     <div class="form-group">
                         <label for="betreibung">Frais de poursuite/mainlevée (CHF)</label>
                         <input type="number" id="betreibung" value="0" min="0">
+                        <span class="help-text">Si une poursuite a déjà été engagée</span>
                     </div>
                 </div>
 
@@ -581,6 +622,7 @@
                         <input type="checkbox" id="schlichtung-aktiv" checked>
                         <span>Inclure la procédure de conciliation</span>
                     </label>
+                    <span class="help-text" style="margin-left: 30px;">Obligatoire avant action civile (sauf valeur > CHF 100'000 avec opt-out)</span>
                 </div>
             </div>
         </section>
@@ -960,7 +1002,7 @@
             document.getElementById('zeitaufwand').value = 4;
             document.getElementById('bedeutung').value = 4;
             document.getElementById('schwierigkeit').value = 4;
-            document.getElementById('stunden-anwalt').value = 15;
+            document.getElementById('stunden-anwalt').value = 0;
             document.getElementById('stundenansatz').value = 250;
             document.getElementById('expertisen').value = 0;
             document.getElementById('betreibung').value = 0;
@@ -974,6 +1016,50 @@
             // Mettre à jour l'UI
             document.getElementById('instanz2-content').classList.add('collapsed');
             document.getElementById('instanz3-content').classList.add('collapsed');
+        }
+
+        function syncStreitwert() {
+            const streitwert1 = document.getElementById('streitwert1').value;
+            document.getElementById('streitwert2').value = streitwert1;
+            document.getElementById('streitwert3').value = streitwert1;
+            berechneUndZeige();
+        }
+
+        function estimateHours() {
+            const streitwert = parseFloat(document.getElementById('streitwert1').value) || 0;
+            let hours = 0;
+            let description = '';
+
+            // Estimation basée sur la valeur litigieuse (phase extrajudiciaire)
+            if (streitwert <= 5000) {
+                hours = 3;
+                description = '~3h pour petites affaires';
+            } else if (streitwert <= 10000) {
+                hours = 5;
+                description = '~5h pour affaires simples';
+            } else if (streitwert <= 30000) {
+                hours = 10;
+                description = '~10h pour affaires moyennes';
+            } else if (streitwert <= 50000) {
+                hours = 15;
+                description = '~15h pour affaires importantes';
+            } else if (streitwert <= 100000) {
+                hours = 20;
+                description = '~20h pour affaires conséquentes';
+            } else if (streitwert <= 250000) {
+                hours = 30;
+                description = '~30h pour affaires complexes';
+            } else if (streitwert <= 500000) {
+                hours = 40;
+                description = '~40h pour affaires très complexes';
+            } else {
+                hours = 60;
+                description = '~60h+ pour grandes procédures';
+            }
+
+            document.getElementById('stunden-anwalt').value = hours;
+            document.getElementById('stunden-help').textContent = description + ' (indicatif)';
+            berechneUndZeige();
         }
     </script>
 </body>
