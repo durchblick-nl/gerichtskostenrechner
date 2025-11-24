@@ -454,6 +454,16 @@
         }
         .warning-box.visible { display: block; }
 
+        .info-box-art114 {
+            background: #d4edda;
+            border-color: var(--success);
+        }
+
+        .info-box-art114-arbeitsrecht {
+            background: #fff3cd;
+            border-color: var(--warning);
+        }
+
         .summary-box {
             background: linear-gradient(135deg, #e8f4f8 0%, #d4e8ed 100%);
             border: 1px solid var(--primary-light);
@@ -585,6 +595,27 @@
                         <option value="summarisch">Procédure sommaire</option>
                     </select>
                 </div>
+                <div class="form-group">
+                    <label for="rechtsgebiet"><span data-tooltip="Art. 114 CPC: Pour certains domaines juridiques, aucun frais de justice n'est perçu dans la procédure de conciliation">Domaine juridique</span></label>
+                    <select id="rechtsgebiet">
+                        <option value="standard">Standard (payant)</option>
+                        <option value="arbeitsrecht">Droit du travail (gratuit jusqu'à CHF 30'000)</option>
+                        <option value="mietrecht">Bail locaux d'habitation/commerciaux (gratuit)</option>
+                        <option value="gleichstellung">Loi sur l'égalité (gratuit)</option>
+                        <option value="behinderten">Loi sur l'égalité pour handicapés (gratuit)</option>
+                        <option value="mitwirkung">Loi sur la participation (gratuit)</option>
+                        <option value="zusatzversicherung">Assurance-maladie complémentaire (gratuit)</option>
+                        <option value="datenschutz">Loi sur la protection des données (gratuit)</option>
+                    </select>
+                </div>
+            </div>
+
+            <div class="info-box info-box-art114" id="art114-info" style="display: none;">
+                <strong>Art. 114 CPC - Procédure de conciliation gratuite:</strong> Pour ce domaine juridique, aucun frais de justice n'est perçu dans la procédure de conciliation. Les frais de conciliation sont fixés à CHF 0.
+            </div>
+
+            <div class="info-box info-box-art114-arbeitsrecht" id="art114-arbeitsrecht-warning" style="display: none;">
+                <strong>Note droit du travail:</strong> Pour les litiges de droit du travail, la procédure de conciliation n'est gratuite que jusqu'à une valeur litigieuse de CHF 30'000. Au-delà, les frais de conciliation normaux s'appliquent.
             </div>
 
             <div class="info-box">
@@ -1085,13 +1116,22 @@
 
         function berechneUndZeige() {
             updateAusschoepfung();
+            updateArt114Info();
+
+            const rechtsgebiet = document.getElementById('rechtsgebiet').value;
+            const streitwert1 = parseFloat(document.getElementById('streitwert1').value) || 0;
+
+            // Art. 114 CPC: Procédure de conciliation gratuite
+            const schlichtungKostenfrei = isSchlichtungKostenfrei(rechtsgebiet, streitwert1);
 
             const params = {
                 kanton: document.getElementById('kanton').value,
-                streitwert1: parseFloat(document.getElementById('streitwert1').value) || 0,
+                streitwert1: streitwert1,
                 streitwert2: parseFloat(document.getElementById('streitwert2').value) || 0,
                 streitwert3: parseFloat(document.getElementById('streitwert3').value) || 0,
                 verfahrensart: document.getElementById('verfahrensart').value,
+                rechtsgebiet: rechtsgebiet,
+                schlichtungKostenfrei: schlichtungKostenfrei,
                 zeitaufwand: parseInt(document.getElementById('zeitaufwand').value) || 0,
                 bedeutung: parseInt(document.getElementById('bedeutung').value) || 0,
                 schwierigkeit: parseInt(document.getElementById('schwierigkeit').value) || 0,
@@ -1110,6 +1150,39 @@
 
             const result = CAPCalculator.berechneAlles(params);
             zeigeErgebnisse(result);
+        }
+
+        // Art. 114 CPC: Vérifie si la conciliation est gratuite
+        function isSchlichtungKostenfrei(rechtsgebiet, streitwert) {
+            if (rechtsgebiet === 'standard') return false;
+            if (rechtsgebiet === 'arbeitsrecht') return streitwert <= 30000;
+            // Tous les autres domaines sont toujours gratuits
+            return true;
+        }
+
+        // Mise à jour des info boxes Art. 114
+        function updateArt114Info() {
+            const rechtsgebiet = document.getElementById('rechtsgebiet').value;
+            const streitwert = parseFloat(document.getElementById('streitwert1').value) || 0;
+            const art114Info = document.getElementById('art114-info');
+            const art114ArbeitsrechtWarning = document.getElementById('art114-arbeitsrecht-warning');
+
+            // Masquer toutes les info boxes
+            art114Info.style.display = 'none';
+            art114ArbeitsrechtWarning.style.display = 'none';
+
+            if (rechtsgebiet === 'standard') return;
+
+            if (rechtsgebiet === 'arbeitsrecht') {
+                if (streitwert <= 30000) {
+                    art114Info.style.display = 'block';
+                } else {
+                    art114ArbeitsrechtWarning.style.display = 'block';
+                }
+            } else {
+                // Tous les autres domaines gratuits
+                art114Info.style.display = 'block';
+            }
         }
 
         function zeigeErgebnisse(r) {
@@ -1224,12 +1297,18 @@
 
         function exportPDF() {
             // Calcul actuel
+            const rechtsgebiet = document.getElementById('rechtsgebiet').value;
+            const streitwert1 = parseFloat(document.getElementById('streitwert1').value) || 0;
+            const schlichtungKostenfrei = isSchlichtungKostenfrei(rechtsgebiet, streitwert1);
+
             const params = {
                 kanton: document.getElementById('kanton').value,
-                streitwert1: parseFloat(document.getElementById('streitwert1').value) || 0,
+                streitwert1: streitwert1,
                 streitwert2: parseFloat(document.getElementById('streitwert2').value) || 0,
                 streitwert3: parseFloat(document.getElementById('streitwert3').value) || 0,
                 verfahrensart: document.getElementById('verfahrensart').value,
+                rechtsgebiet: rechtsgebiet,
+                schlichtungKostenfrei: schlichtungKostenfrei,
                 zeitaufwand: parseInt(document.getElementById('zeitaufwand').value) || 0,
                 bedeutung: parseInt(document.getElementById('bedeutung').value) || 0,
                 schwierigkeit: parseInt(document.getElementById('schwierigkeit').value) || 0,
@@ -1328,6 +1407,7 @@
                 datum: document.getElementById('datum').value,
                 kanton: document.getElementById('kanton').value,
                 verfahrensart: document.getElementById('verfahrensart').value,
+                rechtsgebiet: document.getElementById('rechtsgebiet').value,
                 streitwert1: document.getElementById('streitwert1').value,
                 streitwert2: document.getElementById('streitwert2').value,
                 streitwert3: document.getElementById('streitwert3').value,
@@ -1374,6 +1454,7 @@
                 if (data.datum) document.getElementById('datum').value = data.datum;
                 if (data.kanton) document.getElementById('kanton').value = data.kanton;
                 if (data.verfahrensart) document.getElementById('verfahrensart').value = data.verfahrensart;
+                if (data.rechtsgebiet) document.getElementById('rechtsgebiet').value = data.rechtsgebiet;
                 if (data.streitwert1) document.getElementById('streitwert1').value = data.streitwert1;
                 if (data.streitwert2) document.getElementById('streitwert2').value = data.streitwert2;
                 if (data.streitwert3) document.getElementById('streitwert3').value = data.streitwert3;

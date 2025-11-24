@@ -116,6 +116,8 @@ const CAPCalculator = {
             streitwert2,
             streitwert3,
             verfahrensart,
+            rechtsgebiet,
+            schlichtungKostenfrei, // Art. 114 ZPO
             zeitaufwand,
             bedeutung,
             schwierigkeit,
@@ -211,7 +213,12 @@ const CAPCalculator = {
         }
 
         if (inkludiereSchlichtung) {
-            result.aussergerichtlich.schlichtung = this.getSchlichtungsgebuehr(streitwert1, kanton);
+            // Art. 114 ZPO: Kostenfreies Schlichtungsverfahren bei bestimmten Rechtsgebieten
+            if (schlichtungKostenfrei) {
+                result.aussergerichtlich.schlichtung = 0;
+            } else {
+                result.aussergerichtlich.schlichtung = this.getSchlichtungsgebuehr(streitwert1, kanton);
+            }
         }
 
         result.aussergerichtlich.total =

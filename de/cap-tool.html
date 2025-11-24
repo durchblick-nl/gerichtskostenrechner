@@ -464,6 +464,16 @@
             display: block;
         }
 
+        .info-box-art114 {
+            background: #d4edda;
+            border-color: var(--success);
+        }
+
+        .info-box-art114-arbeitsrecht {
+            background: #fff3cd;
+            border-color: var(--warning);
+        }
+
         /* Summary Box */
         .summary-box {
             background: linear-gradient(135deg, #e8f4f8 0%, #d4e8ed 100%);
@@ -714,6 +724,27 @@
                         <option value="summarisch">Summarisches Verfahren</option>
                     </select>
                 </div>
+                <div class="form-group">
+                    <label for="rechtsgebiet"><span data-tooltip="Art. 114 ZPO: Bei bestimmten Rechtsgebieten fallen im Schlichtungsverfahren keine Gerichtskosten an">Rechtsgebiet</span></label>
+                    <select id="rechtsgebiet">
+                        <option value="standard">Standard (kostenpflichtig)</option>
+                        <option value="arbeitsrecht">Arbeitsrecht (kostenfrei bis CHF 30'000)</option>
+                        <option value="mietrecht">Mietrecht Wohn-/Geschäftsräume (kostenfrei)</option>
+                        <option value="gleichstellung">Gleichstellungsgesetz (kostenfrei)</option>
+                        <option value="behinderten">Behindertengleichstellungsgesetz (kostenfrei)</option>
+                        <option value="mitwirkung">Mitwirkungsgesetz (kostenfrei)</option>
+                        <option value="zusatzversicherung">Zusatzversicherung Krankenversicherung (kostenfrei)</option>
+                        <option value="datenschutz">Datenschutzgesetz (kostenfrei)</option>
+                    </select>
+                </div>
+            </div>
+
+            <div class="info-box info-box-art114" id="art114-info" style="display: none;">
+                <strong>Art. 114 ZPO - Kostenfreies Schlichtungsverfahren:</strong> Bei diesem Rechtsgebiet fallen im Schlichtungsverfahren keine Gerichtskosten an. Die Schlichtungskosten werden auf CHF 0 gesetzt.
+            </div>
+
+            <div class="info-box info-box-art114-arbeitsrecht" id="art114-arbeitsrecht-warning" style="display: none;">
+                <strong>Hinweis Arbeitsrecht:</strong> Bei arbeitsrechtlichen Streitigkeiten ist das Schlichtungsverfahren nur bis zu einem Streitwert von CHF 30'000 kostenfrei. Bei höherem Streitwert fallen normale Schlichtungskosten an.
             </div>
 
             <div class="info-box">
@@ -1214,13 +1245,22 @@
 
         function berechneUndZeige() {
             updateAusschoepfung();
+            updateArt114Info();
+
+            const rechtsgebiet = document.getElementById('rechtsgebiet').value;
+            const streitwert1 = parseFloat(document.getElementById('streitwert1').value) || 0;
+
+            // Art. 114 ZPO: Kostenfreies Schlichtungsverfahren prüfen
+            const schlichtungKostenfrei = isSchlichtungKostenfrei(rechtsgebiet, streitwert1);
 
             const params = {
                 kanton: document.getElementById('kanton').value,
-                streitwert1: parseFloat(document.getElementById('streitwert1').value) || 0,
+                streitwert1: streitwert1,
                 streitwert2: parseFloat(document.getElementById('streitwert2').value) || 0,
                 streitwert3: parseFloat(document.getElementById('streitwert3').value) || 0,
                 verfahrensart: document.getElementById('verfahrensart').value,
+                rechtsgebiet: rechtsgebiet,
+                schlichtungKostenfrei: schlichtungKostenfrei,
                 zeitaufwand: parseInt(document.getElementById('zeitaufwand').value) || 0,
                 bedeutung: parseInt(document.getElementById('bedeutung').value) || 0,
                 schwierigkeit: parseInt(document.getElementById('schwierigkeit').value) || 0,
@@ -1239,6 +1279,39 @@
 
             const result = CAPCalculator.berechneAlles(params);
             zeigeErgebnisse(result);
+        }
+
+        // Art. 114 ZPO: Prüft ob Schlichtung kostenfrei ist
+        function isSchlichtungKostenfrei(rechtsgebiet, streitwert) {
+            if (rechtsgebiet === 'standard') return false;
+            if (rechtsgebiet === 'arbeitsrecht') return streitwert <= 30000;
+            // Alle anderen Rechtsgebiete sind immer kostenfrei
+            return true;
+        }
+
+        // Art. 114 Info-Boxen aktualisieren
+        function updateArt114Info() {
+            const rechtsgebiet = document.getElementById('rechtsgebiet').value;
+            const streitwert = parseFloat(document.getElementById('streitwert1').value) || 0;
+            const art114Info = document.getElementById('art114-info');
+            const art114ArbeitsrechtWarning = document.getElementById('art114-arbeitsrecht-warning');
+
+            // Alle Info-Boxen verstecken
+            art114Info.style.display = 'none';
+            art114ArbeitsrechtWarning.style.display = 'none';
+
+            if (rechtsgebiet === 'standard') return;
+
+            if (rechtsgebiet === 'arbeitsrecht') {
+                if (streitwert <= 30000) {
+                    art114Info.style.display = 'block';
+                } else {
+                    art114ArbeitsrechtWarning.style.display = 'block';
+                }
+            } else {
+                // Alle anderen kostenfreien Rechtsgebiete
+                art114Info.style.display = 'block';
+            }
         }
 
         function zeigeErgebnisse(r) {
@@ -1353,12 +1426,18 @@
 
         function exportPDF() {
             // Aktuelle Berechnung durchführen
+            const rechtsgebiet = document.getElementById('rechtsgebiet').value;
+            const streitwert1 = parseFloat(document.getElementById('streitwert1').value) || 0;
+            const schlichtungKostenfrei = isSchlichtungKostenfrei(rechtsgebiet, streitwert1);
+
             const params = {
                 kanton: document.getElementById('kanton').value,
-                streitwert1: parseFloat(document.getElementById('streitwert1').value) || 0,
+                streitwert1: streitwert1,
                 streitwert2: parseFloat(document.getElementById('streitwert2').value) || 0,
                 streitwert3: parseFloat(document.getElementById('streitwert3').value) || 0,
                 verfahrensart: document.getElementById('verfahrensart').value,
+                rechtsgebiet: rechtsgebiet,
+                schlichtungKostenfrei: schlichtungKostenfrei,
                 zeitaufwand: parseInt(document.getElementById('zeitaufwand').value) || 0,
                 bedeutung: parseInt(document.getElementById('bedeutung').value) || 0,
                 schwierigkeit: parseInt(document.getElementById('schwierigkeit').value) || 0,
@@ -1457,6 +1536,7 @@
                 datum: document.getElementById('datum').value,
                 kanton: document.getElementById('kanton').value,
                 verfahrensart: document.getElementById('verfahrensart').value,
+                rechtsgebiet: document.getElementById('rechtsgebiet').value,
                 streitwert1: document.getElementById('streitwert1').value,
                 streitwert2: document.getElementById('streitwert2').value,
                 streitwert3: document.getElementById('streitwert3').value,
@@ -1503,6 +1583,7 @@
                 if (data.datum) document.getElementById('datum').value = data.datum;
                 if (data.kanton) document.getElementById('kanton').value = data.kanton;
                 if (data.verfahrensart) document.getElementById('verfahrensart').value = data.verfahrensart;
+                if (data.rechtsgebiet) document.getElementById('rechtsgebiet').value = data.rechtsgebiet;
                 if (data.streitwert1) document.getElementById('streitwert1').value = data.streitwert1;
                 if (data.streitwert2) document.getElementById('streitwert2').value = data.streitwert2;
                 if (data.streitwert3) document.getElementById('streitwert3').value = data.streitwert3;
