@@ -1,0 +1,11 @@
+# CAP internal tool - do not upload
+tool_cap/
+
+# OS files
+.DS_Store
+Thumbs.db
+
+# Editor files
+*.swp
+*.swo
+*~
