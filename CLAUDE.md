@@ -106,6 +106,9 @@ Berechnet Betreibungskosten nach der Gebührenverordnung zum SchKG:
 **Rechtsgrundlagen:**
 - [GebV SchKG (SR 281.35)](https://www.fedlex.admin.ch/eli/cc/1996/3112_3112_3112/de)
 
+**Zusatzinfos auf Betreibungsseite:**
+- Info-Karte "Ungerechtfertigte Betreibung?" mit Link zu Justis.ch-Artikel
+
 ## Wichtige Dateien
 
 ### scripts/calculations.js
