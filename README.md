@@ -17,6 +17,7 @@ Berechne Gerichtskosten und Betreibungsgebühren für die Schweiz.
 |------|--------------|------|
 | **Gerichtskostenrechner** | Gerichtskosten für Zivilverfahren (26 Kantone) | [/de/](https://gerichtskostenrechner.ch/de/) |
 | **Betreibungsrechner** | Betreibungskosten nach GebV SchKG | [/de/betreibung.html](https://gerichtskostenrechner.ch/de/betreibung.html) |
+| **CAP-Tool** | Prozesskosten-Analyse inkl. Gewinnwahrscheinlichkeit | [/de/cap-tool.html](https://gerichtskostenrechner.ch/de/cap-tool.html) |
 
 ### Was sind Prozesskosten?
 
@@ -74,6 +75,7 @@ Calculez les frais de justice et de poursuite pour la Suisse.
 |-------|-------------|------|
 | **Frais de justice** | Frais de procédure civile (26 cantons) | [/fr/](https://gerichtskostenrechner.ch/fr/) |
 | **Calculateur de poursuite** | Frais de poursuite selon GebV LP | [/fr/betreibung.html](https://gerichtskostenrechner.ch/fr/betreibung.html) |
+| **Outil CAP** | Analyse des frais de procès incl. probabilité de gain | [/fr/cap-tool.html](https://gerichtskostenrechner.ch/fr/cap-tool.html) |
 
 ### Que sont les frais de procédure?
 
@@ -126,15 +128,19 @@ gerichtskostenrechner/
 ├── de/
 │   ├── index.html       # Gerichtskostenrechner (DE)
 │   ├── kosten.html      # Kostenübersicht (DE)
-│   └── betreibung.html  # Betreibungsrechner (DE)
+│   ├── betreibung.html  # Betreibungsrechner (DE)
+│   └── cap-tool.html    # CAP-Tool (DE)
 ├── fr/
 │   ├── index.html       # Frais de justice (FR)
 │   ├── kosten.html      # Aperçu des frais (FR)
-│   └── betreibung.html  # Calculateur de poursuite (FR)
+│   ├── betreibung.html  # Calculateur de poursuite (FR)
+│   └── cap-tool.html    # Outil CAP (FR)
 ├── css/styles.css       # Gemeinsame Styles / Styles partagés
 ├── scripts/
 │   ├── calculations.js  # Berechnungslogik / Logique de calcul
-│   └── app.js           # UI-Logik / Logique UI
+│   ├── app.js           # UI-Logik / Logique UI
+│   ├── pdf-export.js    # PDF-Export (jsPDF)
+│   └── cap-pdf.js       # PDF-Export für CAP-Tool
 ├── images/              # OG-Bilder / Images OG (1200x630)
 ├── test.js              # Tests (node test.js)
 ├── KOSTEN.md            # Kostenübersicht / Aperçu des frais

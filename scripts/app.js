@@ -3,6 +3,9 @@
  * With canton selection
  */
 
+// Globale Variable für PDF-Export
+let lastCalculationResult = null;
+
 document.addEventListener('DOMContentLoaded', function() {
     const form = document.getElementById('kostenForm');
     const streitwertInput = document.getElementById('streitwert');
@@ -252,10 +255,25 @@ function displayResult(result, includeAnwalt) {
     const verfahrensLabels = getVerfahrensartLabels(lang);
     const cantonName = result.cantonName ? (result.cantonName[lang] || result.cantonName.de) : result.canton;
 
+    // Daten für PDF-Export speichern
+    lastCalculationResult = {
+        cantonName: cantonName,
+        streitwert: result.streitwert,
+        verfahrensart: verfahrensLabels[result.verfahrensart] || result.verfahrensart,
+        feesEstimated: result.fees.estimated,
+        feesMin: result.fees.min,
+        feesMax: result.fees.max,
+        kostenvorschuss: result.kostenvorschuss,
+        lawyerFeesEstimated: includeAnwalt && result.lawyerFees ? result.lawyerFees.estimated : null,
+        totalEstimated: includeAnwalt && result.totalCosts ? result.totalCosts.estimated : null,
+        totalMin: includeAnwalt && result.totalCosts ? result.totalCosts.min : null,
+        totalMax: includeAnwalt && result.totalCosts ? result.totalCosts.max : null
+    };
+
     let html = `
         <div class="result-actions">
-            <button type="button" onclick="printResult()" class="print-button">
-                <i class="fas fa-print"></i> ${lang === 'fr' ? 'Imprimer' : 'Drucken'}
+            <button type="button" onclick="exportPDF()" class="print-button">
+                <i class="fas fa-file-pdf"></i> ${lang === 'fr' ? 'Enregistrer en PDF' : 'Als PDF speichern'}
             </button>
         </div>
         <div class="result-summary">
@@ -372,6 +390,27 @@ function printResult() {
             `Berechnet am ${dateStr} um ${timeStr}`;
     }
     window.print();
+}
+
+/**
+ * Export PDF
+ */
+function exportPDF() {
+    if (!lastCalculationResult) {
+        const lang = getLang();
+        alert(lang === 'fr'
+            ? 'Veuillez d\'abord effectuer un calcul.'
+            : 'Bitte führen Sie zuerst eine Berechnung durch.');
+        return;
+    }
+
+    const lang = getLang();
+
+    if (typeof GerichtskostenPdfExport !== 'undefined') {
+        GerichtskostenPdfExport.generatePDF(lastCalculationResult, lang);
+    } else {
+        printResult();
+    }
 }
 
 /**

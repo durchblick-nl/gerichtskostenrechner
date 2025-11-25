@@ -533,7 +533,22 @@
             costs.push({ label: 'Port/notification (estimation)', amount: postage });
             total += postage;
 
+            // Données pour export PDF
+            lastBetreibungData = {
+                forderung: forderung,
+                zahlungsbefehl: zahlungsbefehl ? baseFee : 0,
+                fortsetzung: fortsetzung ? Math.round(baseFee * 0.5) : 0,
+                pfaendung: pfaendung ? baseFee : 0,
+                verwertung: verwertung ? Math.round(baseFee * 1.5) : 0,
+                total: total
+            };
+
             let resultHTML = `
+                <div class="result-actions">
+                    <button type="button" onclick="exportBetreibungPDF()" class="print-button">
+                        <i class="fas fa-file-pdf"></i> Enregistrer en PDF
+                    </button>
+                </div>
                 <h3>Frais de poursuite</h3>
                 <div class="result-summary">
                     <div class="result-row">
@@ -579,6 +594,23 @@
             document.getElementById('result').style.display = 'block';
             document.getElementById('result').scrollIntoView({ behavior: 'smooth' });
         });
+
+        // PDF Export
+        let lastBetreibungData = null;
+
+        function exportBetreibungPDF() {
+            if (!lastBetreibungData) {
+                alert('Veuillez d\'abord effectuer un calcul.');
+                return;
+            }
+            if (typeof BetreibungPdfExport !== 'undefined') {
+                BetreibungPdfExport.generatePDF(lastBetreibungData, 'fr');
+            } else {
+                window.print();
+            }
+        }
     </script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/3.0.3/jspdf.umd.min.js"></script>
+    <script src="../scripts/pdf-export.js"></script>
 </body>
 </html>
