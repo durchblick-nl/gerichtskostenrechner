@@ -476,7 +476,8 @@
         }
 
         function parseAmount(str) {
-            return parseFloat(str.replace(/['',]/g, '').replace(/\s/g, '')) || 0;
+            // Remove all types of apostrophes, quotes, and spaces used as thousands separators
+            return parseFloat(str.replace(/[''\u2019\u2018\u02BC,\s]/g, '')) || 0;
         }
 
         // Format input as Swiss currency

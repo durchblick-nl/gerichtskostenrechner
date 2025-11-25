@@ -324,10 +324,12 @@ function formatNumber(num) {
 
 /**
  * Parse a Swiss-formatted number string
+ * Handles various apostrophe characters used as thousands separators
  */
 function parseSwissNumber(str) {
     if (typeof str !== 'string') return str;
-    return parseFloat(str.replace(/'/g, '').replace(/,/g, '.'));
+    // Remove all types of apostrophes, quotes, and spaces used as thousands separators
+    return parseFloat(str.replace(/[''\u2019\u2018\u02BC\s]/g, '').replace(/,/g, '.'));
 }
 
 /**

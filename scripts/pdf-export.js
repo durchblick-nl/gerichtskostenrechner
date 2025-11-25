@@ -53,69 +53,99 @@ const GerichtskostenPdfExport = {
         // Ergebnis
         y = this.addSectionHeader(doc, texts.result, y, primaryColor);
 
-        // Gerichtskosten
+        // Gerichtskosten Box
         doc.setFillColor(240, 248, 255);
-        doc.roundedRect(15, y, 180, 25, 3, 3, 'F');
+        doc.roundedRect(15, y, 180, 22, 3, 3, 'F');
 
         doc.setTextColor(...primaryColor);
         doc.setFontSize(10);
         doc.setFont('helvetica', 'bold');
-        doc.text(texts.courtFees, 25, y + 10);
+        doc.text(texts.courtFees, 25, y + 8);
 
         doc.setFontSize(14);
         doc.setTextColor(...accentColor);
-        doc.text('ca. ' + this.formatCHF(data.feesEstimated), 120, y + 10);
+        doc.text('ca. ' + this.formatCHF(data.feesEstimated), 120, y + 8);
 
-        doc.setFontSize(9);
+        doc.setFontSize(8);
         doc.setTextColor(100, 100, 100);
         doc.setFont('helvetica', 'normal');
-        doc.text(`(${this.formatCHF(data.feesMin)} - ${this.formatCHF(data.feesMax)})`, 120, y + 18);
+        doc.text(`${texts.range}: ${this.formatCHF(data.feesMin)} – ${this.formatCHF(data.feesMax)}`, 25, y + 16);
 
-        y += 35;
+        y += 28;
+
+        // Kostenvorschuss
+        doc.setFontSize(9);
+        doc.setTextColor(0, 0, 0);
+        doc.setFont('helvetica', 'normal');
+        doc.text(texts.deposit, 15, y);
+        doc.setFont('helvetica', 'bold');
+        doc.text(this.formatCHF(data.kostenvorschuss), 120, y);
+
+        y += 10;
 
         // Anwaltskosten falls vorhanden
         if (data.lawyerFeesEstimated) {
+            // Trennlinie
+            doc.setDrawColor(200, 200, 200);
+            doc.line(15, y, 195, y);
+            y += 8;
+
+            // Anwaltskosten
             doc.setFillColor(250, 250, 250);
-            doc.roundedRect(15, y, 180, 20, 3, 3, 'F');
+            doc.roundedRect(15, y, 180, 14, 2, 2, 'F');
 
             doc.setTextColor(...primaryColor);
-            doc.setFontSize(10);
+            doc.setFontSize(9);
             doc.setFont('helvetica', 'bold');
-            doc.text(texts.lawyerFees, 25, y + 10);
+            doc.text(texts.lawyerFees, 25, y + 9);
 
             doc.setTextColor(0, 0, 0);
-            doc.text('ca. ' + this.formatCHF(data.lawyerFeesEstimated), 120, y + 10);
+            doc.text('ca. ' + this.formatCHF(data.lawyerFeesEstimated), 120, y + 9);
 
-            y += 28;
+            y += 18;
 
-            // Gesamtkosten
+            // Parteientschädigung
+            doc.setFillColor(250, 250, 250);
+            doc.roundedRect(15, y, 180, 14, 2, 2, 'F');
+
+            doc.setTextColor(...primaryColor);
+            doc.setFontSize(9);
+            doc.setFont('helvetica', 'bold');
+            doc.text(texts.partyCompensation, 25, y + 9);
+
+            doc.setTextColor(0, 0, 0);
+            doc.setFont('helvetica', 'normal');
+            doc.text('ca. ' + this.formatCHF(data.lawyerFeesEstimated), 120, y + 9);
+
+            y += 20;
+
+            // Trennlinie
+            doc.setDrawColor(200, 200, 200);
+            doc.line(15, y, 195, y);
+            y += 8;
+
+            // Gesamtkosten Box
             doc.setFillColor(240, 248, 255);
-            doc.roundedRect(15, y, 180, 25, 3, 3, 'F');
+            doc.roundedRect(15, y, 180, 22, 3, 3, 'F');
 
             doc.setTextColor(...primaryColor);
             doc.setFontSize(10);
             doc.setFont('helvetica', 'bold');
-            doc.text(texts.totalCosts, 25, y + 10);
+            doc.text(texts.totalCosts, 25, y + 8);
 
             doc.setFontSize(14);
             doc.setTextColor(...accentColor);
-            doc.text('ca. ' + this.formatCHF(data.totalEstimated), 120, y + 10);
+            doc.text('ca. ' + this.formatCHF(data.totalEstimated), 120, y + 8);
 
-            doc.setFontSize(9);
+            doc.setFontSize(8);
             doc.setTextColor(100, 100, 100);
             doc.setFont('helvetica', 'normal');
-            doc.text(`(${this.formatCHF(data.totalMin)} - ${this.formatCHF(data.totalMax)})`, 120, y + 18);
+            doc.text(`${texts.range}: ${this.formatCHF(data.totalMin)} – ${this.formatCHF(data.totalMax)}`, 25, y + 16);
 
-            y += 35;
+            y += 28;
         }
 
-        // Kostenvorschuss
-        doc.setFontSize(10);
-        doc.setTextColor(0, 0, 0);
-        doc.setFont('helvetica', 'normal');
-        doc.text(`${texts.deposit}: ${this.formatCHF(data.kostenvorschuss)}`, 15, y);
-
-        y += 15;
+        y += 5;
 
         // Rechtliche Grundlagen
         y = this.addSectionHeader(doc, texts.legalBasis, y, primaryColor);
@@ -205,9 +235,11 @@ const GerichtskostenPdfExport = {
                 procedureType: 'Type de procédure',
                 result: 'Résultat',
                 courtFees: 'Frais de justice:',
+                range: 'Fourchette',
                 lawyerFees: 'Frais d\'avocat (estimés):',
+                partyCompensation: 'Indemnité de partie (en cas de perte):',
                 totalCosts: 'Coûts totaux (en cas de perte):',
-                deposit: 'Avance de frais (env. 50%)',
+                deposit: 'Avance de frais (env. 50%):',
                 legalBasis: 'Base légale',
                 disclaimer: 'Ce document sert uniquement d\'orientation. Pas de conseil juridique.',
                 footerInfo: 'Calculateur des frais de justice suisses'
@@ -223,9 +255,11 @@ const GerichtskostenPdfExport = {
             procedureType: 'Verfahrensart',
             result: 'Ergebnis',
             courtFees: 'Gerichtskosten:',
+            range: 'Bandbreite',
             lawyerFees: 'Anwaltskosten (geschätzt):',
+            partyCompensation: 'Parteientschädigung (bei Verlust):',
             totalCosts: 'Gesamtkosten (bei Verlust):',
-            deposit: 'Kostenvorschuss (ca. 50%)',
+            deposit: 'Kostenvorschuss (ca. 50%):',
             legalBasis: 'Rechtliche Grundlagen',
             disclaimer: 'Dieses Dokument dient nur zur Orientierung. Keine Rechtsberatung.',
             footerInfo: 'Schweizer Gerichtskostenrechner'
